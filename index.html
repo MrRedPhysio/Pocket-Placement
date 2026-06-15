@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#12355b" />
+  <title>Pocket Placement</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="brand-row">
+        <div class="logo">PP</div>
+        <div>
+          <h1>Pocket Placement</h1>
+          <p>Confidence in your pocket before your first placement.</p>
+        </div>
+      </div>
+      <div class="progress-card">
+        <span>Overall preparation</span>
+        <strong id="overallPercent">0%</strong>
+        <div class="bar"><div id="overallBar"></div></div>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Main sections">
+      <button class="tab active" data-view="home">Home</button>
+      <button class="tab" data-view="checklists">Checklists</button>
+      <button class="tab" data-view="scenarios">Scenarios</button>
+      <button class="tab" data-view="templates">Templates</button>
+      <button class="tab" data-view="progress">Progress</button>
+    </nav>
+
+    <main>
+      <section id="home" class="view active-view">
+        <div class="grid">
+          <article class="feature-card" data-jump="checklists">
+            <span>✅</span>
+            <h2>Placement checklists</h2>
+            <p>Prepare before you arrive, survive day one, and stay organised each shift.</p>
+          </article>
+          <article class="feature-card" data-jump="scenarios">
+            <span>🚨</span>
+            <h2>What to do when...</h2>
+            <p>Practise common placement moments before they happen.</p>
+          </article>
+          <article class="feature-card" data-jump="templates">
+            <span>📝</span>
+            <h2>Student templates</h2>
+            <p>Copy-friendly SOAP notes, handovers, consent scripts, and reflections.</p>
+          </article>
+        </div>
+        <section class="calm-box">
+          <h2>First placement reminder</h2>
+          <p>You are not expected to know everything. You are expected to be safe, honest, respectful, and willing to learn.</p>
+        </section>
+      </section>
+
+      <section id="checklists" class="view">
+        <div class="section-title">
+          <h2>Checklists</h2>
+          <button id="resetProgress" class="ghost">Reset progress</button>
+        </div>
+        <div id="checklistList" class="stack"></div>
+      </section>
+
+      <section id="scenarios" class="view">
+        <div class="section-title">
+          <h2>Scenarios</h2>
+          <p>Choose the safest first action.</p>
+        </div>
+        <div id="scenarioList" class="stack"></div>
+      </section>
+
+      <section id="templates" class="view">
+        <div class="section-title">
+          <h2>Templates</h2>
+          <p>Use these as student prompts, then adapt to your placement policy.</p>
+        </div>
+        <div id="templateList" class="stack"></div>
+      </section>
+
+      <section id="progress" class="view">
+        <div class="section-title">
+          <h2>My progress</h2>
+          <p>Track confidence-building preparation.</p>
+        </div>
+        <div class="stats">
+          <div><strong id="doneCount">0</strong><span>steps done</span></div>
+          <div><strong id="scenarioCount">0</strong><span>scenarios tried</span></div>
+          <div><strong id="templateCount">0</strong><span>templates copied</span></div>
+        </div>
+        <button id="exportProgress" class="primary">Export progress summary</button>
+        <pre id="exportBox" class="export-box" hidden></pre>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

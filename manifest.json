@@ -1,0 +1,13 @@
+{
+  "name": "Pocket Placement",
+  "short_name": "PocketPlacement",
+  "description": "A placement preparation app for first-year physiotherapy students.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f8fb",
+  "theme_color": "#12355b",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
