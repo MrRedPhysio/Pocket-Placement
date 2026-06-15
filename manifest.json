@@ -1,13 +1,14 @@
 {
   "name": "Pocket Placement",
   "short_name": "PocketPlacement",
-  "description": "A placement preparation app for first-year physiotherapy students.",
+  "description": "NHS/NICE-aligned placement preparation app for first-year physiotherapy students.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f8fb",
-  "theme_color": "#12355b",
+  "background_color": "#f3f7fb",
+  "theme_color": "#0f2f4f",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose":"any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose":"any maskable" }
   ]
 }

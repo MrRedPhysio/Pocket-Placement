@@ -3,25 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#12355b" />
-  <title>Pocket Placement</title>
+  <meta name="theme-color" content="#0f2f4f" />
+  <title>Pocket Placement | NHS-aligned physiotherapy placement prep</title>
+  <meta name="description" content="Pocket Placement is a mobile placement preparation app for first-year physiotherapy students, with NHS/NICE-aligned safety prompts, checklists, scenarios and documentation templates." />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <div class="app-shell">
     <header class="hero">
+      <div class="topline">Student physiotherapy placement companion</div>
       <div class="brand-row">
-        <div class="logo">PP</div>
+        <div class="logo" aria-hidden="true">PP</div>
         <div>
           <h1>Pocket Placement</h1>
-          <p>Confidence in your pocket before your first placement.</p>
+          <p>Confidence, safety and professionalism in your pocket before your first placement.</p>
         </div>
       </div>
-      <div class="progress-card">
+      <div class="hero-actions">
+        <button class="primary" data-jump="checklists">Start preparing</button>
+        <button class="secondary" data-jump="safety">Safety first</button>
+      </div>
+      <div class="progress-card" aria-label="Overall preparation progress">
         <span>Overall preparation</span>
         <strong id="overallPercent">0%</strong>
         <div class="bar"><div id="overallBar"></div></div>
+        <small id="progressCaption">Complete checklist steps to build your readiness score.</small>
       </div>
     </header>
 
@@ -30,74 +38,71 @@
       <button class="tab" data-view="checklists">Checklists</button>
       <button class="tab" data-view="scenarios">Scenarios</button>
       <button class="tab" data-view="templates">Templates</button>
+      <button class="tab" data-view="safety">Safety</button>
       <button class="tab" data-view="progress">Progress</button>
     </nav>
 
-    <main>
+    <main id="main">
       <section id="home" class="view active-view">
+        <section class="notice clinical-notice">
+          <strong>Important:</strong> This app supports student learning only. Always follow your university, placement provider and educator instructions. Do not assess, treat, document or escalate independently beyond your authorised student scope.
+        </section>
         <div class="grid">
           <article class="feature-card" data-jump="checklists">
-            <span>✅</span>
-            <h2>Placement checklists</h2>
-            <p>Prepare before you arrive, survive day one, and stay organised each shift.</p>
+            <span>✅</span><h2>Placement readiness</h2>
+            <p>NHS-style preparation checklists for consent, infection prevention, safety, communication and documentation.</p>
           </article>
           <article class="feature-card" data-jump="scenarios">
-            <span>🚨</span>
-            <h2>What to do when...</h2>
-            <p>Practise common placement moments before they happen.</p>
+            <span>🚦</span><h2>Safe first actions</h2>
+            <p>Practise common placement moments: refusal, dizziness, falls risk, red flags, safeguarding and uncertainty.</p>
           </article>
           <article class="feature-card" data-jump="templates">
-            <span>📝</span>
-            <h2>Student templates</h2>
-            <p>Copy-friendly SOAP notes, handovers, consent scripts, and reflections.</p>
+            <span>📝</span><h2>Student templates</h2>
+            <p>Copy-friendly prompts for consent, SOAP notes, SBAR handover, reflection and educator feedback.</p>
+          </article>
+          <article class="feature-card" data-jump="safety">
+            <span>🛡️</span><h2>NHS/NICE alignment</h2>
+            <p>Clear reminders based on shared decision-making, valid consent, falls prevention, supervision and red-flag escalation principles.</p>
           </article>
         </div>
         <section class="calm-box">
           <h2>First placement reminder</h2>
-          <p>You are not expected to know everything. You are expected to be safe, honest, respectful, and willing to learn.</p>
+          <p>You are not expected to know everything. You are expected to be safe, honest, respectful, supervised and willing to learn.</p>
         </section>
       </section>
 
       <section id="checklists" class="view">
-        <div class="section-title">
-          <h2>Checklists</h2>
-          <button id="resetProgress" class="ghost">Reset progress</button>
-        </div>
+        <div class="section-title"><div><h2>Placement checklists</h2><p>Tick items off as you prepare. Your progress is saved on this device.</p></div><button id="resetProgress" class="ghost">Reset progress</button></div>
         <div id="checklistList" class="stack"></div>
       </section>
 
       <section id="scenarios" class="view">
-        <div class="section-title">
-          <h2>Scenarios</h2>
-          <p>Choose the safest first action.</p>
-        </div>
+        <div class="section-title"><div><h2>What to do when...</h2><p>Choose the safest first action. These are learning prompts, not local clinical protocols.</p></div></div>
         <div id="scenarioList" class="stack"></div>
       </section>
 
       <section id="templates" class="view">
-        <div class="section-title">
-          <h2>Templates</h2>
-          <p>Use these as student prompts, then adapt to your placement policy.</p>
-        </div>
+        <div class="section-title"><div><h2>Templates and scripts</h2><p>Use as prompts only. Adapt to local documentation systems and educator requirements.</p></div></div>
         <div id="templateList" class="stack"></div>
       </section>
 
+      <section id="safety" class="view">
+        <div class="section-title"><div><h2>Safety and guideline hub</h2><p>Core principles for first-year physiotherapy placement practice.</p></div></div>
+        <div id="safetyList" class="stack"></div>
+      </section>
+
       <section id="progress" class="view">
-        <div class="section-title">
-          <h2>My progress</h2>
-          <p>Track confidence-building preparation.</p>
-        </div>
+        <div class="section-title"><div><h2>My progress</h2><p>Use this to prepare for educator discussion and portfolio reflection.</p></div></div>
         <div class="stats">
           <div><strong id="doneCount">0</strong><span>steps done</span></div>
           <div><strong id="scenarioCount">0</strong><span>scenarios tried</span></div>
           <div><strong id="templateCount">0</strong><span>templates copied</span></div>
         </div>
-        <button id="exportProgress" class="primary">Export progress summary</button>
+        <button id="exportProgress" class="primary">Create progress summary</button>
         <pre id="exportBox" class="export-box" hidden></pre>
       </section>
     </main>
   </div>
-
   <div id="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
