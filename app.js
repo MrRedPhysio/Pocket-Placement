@@ -528,6 +528,7 @@ function setView(id) {
   if (id === 'progress') renderProgress();
   if (id === 'home')     renderHome();
   if (id === 'scenarios') renderScenarios();
+  if (id === 'quiz')     renderQuizHome();
 }
 
 document.querySelectorAll('.tab').forEach(btn =>
@@ -1133,6 +1134,221 @@ document.getElementById('onboardingClose').addEventListener('click', () => {
   persist();
 });
 
+// ── KNOWLEDGE QUIZ ────────────────────────────────────────────
+// True/false revision bank. Foundational level — REVIEW before publishing.
+// Each: { q: statement, answer: true/false, explain: teaching note }
+
+const quizBank = {
+  MSK: {
+    label: 'MSK', icon: '🦴',
+    questions: [
+      { q: 'The rotator cuff is made up of four muscles: supraspinatus, infraspinatus, teres minor and subscapularis.', answer: true, explain: 'Correct — the SITS muscles. They stabilise the glenohumeral joint and are commonly involved in shoulder pathology.' },
+      { q: 'The anterior cruciate ligament (ACL) primarily resists posterior translation of the tibia on the femur.', answer: false, explain: 'False. The ACL chiefly resists ANTERIOR tibial translation. The PCL resists posterior translation.' },
+      { q: 'A grade 3 MRC muscle strength means active movement against gravity but not against added resistance.', answer: true, explain: 'Correct. Grade 3 = full range against gravity only; grade 4 adds resistance; grade 5 is normal power.' },
+      { q: 'Osteoarthritis is primarily an inflammatory autoimmune condition.', answer: false, explain: 'False. OA is a degenerative ("wear and repair") joint condition. Rheumatoid arthritis is the autoimmune inflammatory one.' },
+      { q: 'The medial meniscus is more commonly injured than the lateral meniscus.', answer: true, explain: 'Correct. The medial meniscus is less mobile (attached to the MCL), so it is more prone to injury.' },
+      { q: 'Tendons connect muscle to bone, while ligaments connect bone to bone.', answer: true, explain: 'Correct — a foundational distinction. Tendons: muscle→bone. Ligaments: bone→bone.' },
+      { q: 'A positive empty can (Jobe) test suggests supraspinatus pathology.', answer: true, explain: 'Correct. The empty can test loads the supraspinatus; pain or weakness suggests involvement.' },
+      { q: 'Adhesive capsulitis (frozen shoulder) typically presents with full passive range of motion.', answer: false, explain: 'False. Frozen shoulder is characterised by a global LOSS of both active and passive range, especially external rotation.' },
+      { q: 'The most common direction of shoulder (glenohumeral) dislocation is anterior.', answer: true, explain: 'Correct. Around 95% of glenohumeral dislocations are anterior.' },
+      { q: 'In a typical lumbar disc herniation, the nucleus pulposus most often herniates posterolaterally.', answer: true, explain: 'Correct. The posterolateral annulus is thinner and the posterior longitudinal ligament is weaker laterally, so herniation tends to be posterolateral.' },
+      { q: 'Saddle anaesthesia and new bladder dysfunction with back pain are reassuring signs that do not need urgent escalation.', answer: false, explain: 'False — and important. These are red flags for cauda equina syndrome and require URGENT escalation.' },
+      { q: 'DOMS (delayed onset muscle soreness) typically peaks 24–72 hours after unaccustomed exercise.', answer: true, explain: 'Correct. DOMS usually peaks around 24–72 hours and is linked to eccentric/unaccustomed loading.' },
+      { q: 'The carpal tunnel transmits the ulnar nerve.', answer: false, explain: 'False. The carpal tunnel transmits the MEDIAN nerve. Carpal tunnel syndrome is median nerve compression.' },
+      { q: 'Eccentric loading programmes are commonly used in the management of Achilles tendinopathy.', answer: true, explain: 'Correct. Eccentric (and heavy slow resistance) loading is well-supported for mid-portion Achilles tendinopathy.' },
+      { q: 'A Colles fracture is a fracture of the distal radius with dorsal displacement.', answer: true, explain: 'Correct. Classic "dinner fork" deformity, often from a fall onto an outstretched hand.' }
+    ]
+  },
+  Neuro: {
+    label: 'Neuro', icon: '🧠',
+    questions: [
+      { q: 'An upper motor neurone lesion typically causes increased tone (spasticity) and hyperreflexia.', answer: true, explain: 'Correct. UMN lesions → increased tone, hyperreflexia, positive Babinski. LMN lesions → flaccidity, reduced reflexes, wasting.' },
+      { q: 'In a stroke affecting the left cerebral hemisphere, motor signs usually appear on the left side of the body.', answer: false, explain: 'False. Motor pathways cross (decussate), so a LEFT hemisphere stroke usually causes RIGHT-sided signs.' },
+      { q: 'Expressive (Broca\'s) aphasia mainly affects the production of speech rather than comprehension.', answer: true, explain: 'Correct. Broca\'s (expressive) aphasia affects output; comprehension is relatively preserved. Wernicke\'s affects comprehension.' },
+      { q: 'The cerebellum is primarily responsible for coordination, balance and motor control.', answer: true, explain: 'Correct. Cerebellar dysfunction can cause ataxia, dysmetria, intention tremor and balance problems.' },
+      { q: 'On the AVPU scale, "P" means the patient is fully alert and oriented.', answer: false, explain: 'False. "A" = Alert. "P" = responds only to Pain. The scale is Alert, Voice, Pain, Unresponsive.' },
+      { q: 'Parkinson\'s disease is associated with a resting tremor, bradykinesia and rigidity.', answer: true, explain: 'Correct. The classic triad: resting tremor, bradykinesia and rigidity (often with postural instability later).' },
+      { q: 'A FAST assessment for stroke stands for Face, Arms, Speech, Time.', answer: true, explain: 'Correct. Face droop, Arm weakness, Speech difficulty, Time to call emergency services.' },
+      { q: 'Multiple sclerosis is a degenerative condition of the muscles, not the nervous system.', answer: false, explain: 'False. MS is a demyelinating condition of the CENTRAL nervous system.' },
+      { q: 'A positive Romberg test suggests a problem with proprioception or vestibular input rather than purely cerebellar function.', answer: true, explain: 'Correct. Romberg is positive when balance worsens markedly with eyes closed, pointing to sensory/proprioceptive or vestibular loss rather than cerebellar ataxia.' },
+      { q: 'Foot drop is commonly associated with weakness of the ankle dorsiflexors and can result from common peroneal (fibular) nerve injury.', answer: true, explain: 'Correct. Dorsiflexor weakness causes foot drop; the common fibular nerve is a frequent culprit.' },
+      { q: 'During the early "shock" phase after a spinal cord injury, reflexes below the level are typically exaggerated.', answer: false, explain: 'False. Spinal shock initially causes flaccidity and ABSENT reflexes below the level; spasticity develops later.' },
+      { q: 'The Glasgow Coma Scale assesses eye, verbal and motor responses.', answer: true, explain: 'Correct. GCS scores eye opening, verbal response and motor response (range 3–15).' },
+      { q: 'Patients with hemispatial neglect after stroke are simply choosing to ignore one side and can easily attend to it if reminded.', answer: false, explain: 'False. Neglect is a genuine perceptual/attentional deficit, not a choice. It needs specific rehabilitation strategies.' },
+      { q: 'Guillain-Barré syndrome typically presents with an ascending, symmetrical weakness.', answer: true, explain: 'Correct. Classically an ascending, relatively symmetrical weakness; it can affect respiratory muscles, so monitoring is important.' },
+      { q: 'Spasticity is best described as a velocity-dependent increase in muscle tone.', answer: true, explain: 'Correct. Spasticity increases with faster passive movement — a velocity-dependent resistance.' }
+    ]
+  },
+  Cardioresp: {
+    label: 'Cardioresp', icon: '🫁',
+    questions: [
+      { q: 'A normal resting oxygen saturation (SpO₂) for a healthy adult is generally 95% or above.', answer: true, explain: 'Correct. ≥95% is generally normal; ≤94% should prompt clinical attention, and <90% is urgent.' },
+      { q: 'A normal adult resting respiratory rate is around 12–20 breaths per minute.', answer: true, explain: 'Correct. 12–20 breaths/min at rest; >20 is tachypnoea and can be an early sign of deterioration.' },
+      { q: 'In COPD, the primary problem is a restrictive lung pattern with reduced lung volumes.', answer: false, explain: 'False. COPD is primarily an OBSTRUCTIVE pattern (airflow limitation), not restrictive.' },
+      { q: 'Active cycle of breathing technique (ACBT) is used to help clear airway secretions.', answer: true, explain: 'Correct. ACBT combines breathing control, thoracic expansion and the forced expiration technique (huff) to aid secretion clearance.' },
+      { q: 'On the Borg RPE scale, a patient who cannot speak in full sentences during exercise should usually be encouraged to push harder.', answer: false, explain: 'False. Inability to speak in sentences is a sign to ease off, not push on, especially in early rehab.' },
+      { q: 'Postural drainage uses gravity-assisted positioning to help move secretions toward larger airways.', answer: true, explain: 'Correct. Positioning aims to drain specific lung segments, though it must be used with care and clinical judgement.' },
+      { q: 'Pursed-lip breathing can help patients with COPD by reducing air trapping and easing breathlessness.', answer: true, explain: 'Correct. Pursed-lip breathing creates slight back-pressure, helping keep airways open and reducing air trapping.' },
+      { q: 'A NEWS2 score of 5 or more should generally prompt urgent clinical review.', answer: true, explain: 'Correct. A NEWS2 of ≥5 is a key trigger for escalation — follow local policy.' },
+      { q: 'Finger clubbing can be associated with chronic cardiorespiratory disease.', answer: true, explain: 'Correct. Clubbing is associated with several chronic conditions, including some respiratory and cardiac diseases.' },
+      { q: 'During an acute asthma attack, a silent chest is a reassuring sign.', answer: false, explain: 'False — and critical. A silent chest in acute asthma is an ominous sign of severe airflow limitation requiring emergency response.' },
+      { q: 'The main muscle of inspiration at rest is the diaphragm.', answer: true, explain: 'Correct. The diaphragm does most of the work of quiet breathing; accessory muscles assist when demand rises.' },
+      { q: 'Orthopnoea means breathlessness that worsens when lying flat.', answer: true, explain: 'Correct. Orthopnoea is breathlessness on lying flat, often relieved by sitting up — common in heart failure.' },
+      { q: 'Capillary refill time of under 2 seconds is generally considered normal.', answer: true, explain: 'Correct. A CRT under ~2 seconds is typically normal; prolonged CRT may indicate poor perfusion.' },
+      { q: 'Early mobilisation of appropriate post-operative patients has no role in preventing respiratory complications.', answer: false, explain: 'False. Early, appropriate mobilisation helps reduce post-operative respiratory complications and deconditioning.' },
+      { q: 'Cyanosis (a bluish tinge to lips or extremities) can indicate inadequate oxygenation.', answer: true, explain: 'Correct. Central cyanosis in particular suggests significant hypoxaemia and warrants prompt assessment.' }
+    ]
+  }
+};
+
+// Quiz state lives inside the main state object.
+state.quizBest ||= {};   // { category: bestScorePercent }
+
+let quizActive = null;    // { category, order:[indices], idx, correct, answered }
+
+function renderQuizHome() {
+  const home = document.getElementById('quizHome');
+  const play = document.getElementById('quizPlay');
+  const result = document.getElementById('quizResult');
+  if (!home) return;
+  play.hidden = true; result.hidden = true; home.hidden = false;
+
+  home.innerHTML = `
+    <p class="quiz-intro">Pick a category to begin. Each round draws 10 questions at random — answer true or false, and you'll get an explanation after every one.</p>
+    <div class="quiz-cats">
+      ${Object.entries(quizBank).map(([key, cat]) => {
+        const best = state.quizBest[key];
+        return `<button class="quiz-cat-card" data-cat="${key}">
+          <span class="quiz-cat-icon">${cat.icon}</span>
+          <span class="quiz-cat-name">${cat.label}</span>
+          <span class="quiz-cat-meta">${cat.questions.length} questions${best != null ? ` · best ${best}%` : ''}</span>
+        </button>`;
+      }).join('')}
+    </div>`;
+
+  home.querySelectorAll('.quiz-cat-card').forEach(btn =>
+    btn.addEventListener('click', () => startQuiz(btn.dataset.cat))
+  );
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const QUIZ_ROUND = 10;
+
+function startQuiz(category) {
+  const all = quizBank[category].questions.map((_, i) => i);
+  const order = shuffle(all).slice(0, Math.min(QUIZ_ROUND, all.length));
+  quizActive = { category, order, idx: 0, correct: 0, answered: false };
+  paintQuizQuestion();
+}
+
+function paintQuizQuestion() {
+  const home = document.getElementById('quizHome');
+  const play = document.getElementById('quizPlay');
+  const result = document.getElementById('quizResult');
+  home.hidden = true; result.hidden = true; play.hidden = false;
+
+  const cat = quizBank[quizActive.category];
+  const qIndex = quizActive.order[quizActive.idx];
+  const item = cat.questions[qIndex];
+  quizActive.answered = false;
+
+  play.innerHTML = `
+    <div class="quiz-bar"><div style="width:${(quizActive.idx / quizActive.order.length) * 100}%"></div></div>
+    <div class="quiz-meta-row">
+      <span class="badge">${cat.icon} ${cat.label}</span>
+      <span class="mini-progress">Question ${quizActive.idx + 1} of ${quizActive.order.length}</span>
+    </div>
+    <p class="quiz-statement">${item.q}</p>
+    <div class="quiz-tf">
+      <button class="quiz-tf-btn" data-val="true">True</button>
+      <button class="quiz-tf-btn" data-val="false">False</button>
+    </div>
+    <div class="quiz-feedback" hidden></div>
+    <button class="primary quiz-next" hidden>Next question</button>`;
+
+  play.querySelectorAll('.quiz-tf-btn').forEach(btn =>
+    btn.addEventListener('click', () => answerQuiz(btn.dataset.val === 'true', item))
+  );
+}
+
+function answerQuiz(choice, item) {
+  if (quizActive.answered) return;
+  quizActive.answered = true;
+  const play = document.getElementById('quizPlay');
+  const correct = choice === item.answer;
+  if (correct) quizActive.correct++;
+
+  play.querySelectorAll('.quiz-tf-btn').forEach(btn => {
+    btn.disabled = true;
+    const isThis = (btn.dataset.val === 'true') === choice;
+    const isAnswer = (btn.dataset.val === 'true') === item.answer;
+    if (isAnswer) btn.classList.add('tf-correct');
+    if (isThis && !correct) btn.classList.add('tf-wrong');
+  });
+
+  const fb = play.querySelector('.quiz-feedback');
+  fb.hidden = false;
+  fb.className = `quiz-feedback ${correct ? 'fb-good' : 'fb-bad'}`;
+  fb.innerHTML = `<strong>${correct ? '✅ Correct' : '❌ Not quite'}</strong><p>${item.explain}</p>`;
+
+  const next = play.querySelector('.quiz-next');
+  next.hidden = false;
+  next.textContent = quizActive.idx === quizActive.order.length - 1 ? 'See your score' : 'Next question';
+  next.addEventListener('click', () => {
+    if (quizActive.idx < quizActive.order.length - 1) {
+      quizActive.idx++;
+      paintQuizQuestion();
+    } else {
+      finishQuiz();
+    }
+  });
+}
+
+function finishQuiz() {
+  const play = document.getElementById('quizPlay');
+  const result = document.getElementById('quizResult');
+  play.hidden = true; result.hidden = false;
+
+  const total = quizActive.order.length;
+  const score = quizActive.correct;
+  const pct = Math.round((score / total) * 100);
+  const cat = quizBank[quizActive.category];
+
+  const prevBest = state.quizBest[quizActive.category];
+  const isBest = prevBest == null || pct > prevBest;
+  if (isBest) { state.quizBest[quizActive.category] = pct; persist(); }
+
+  let msg;
+  if (pct === 100)      msg = 'Flawless — that knowledge is sharp.';
+  else if (pct >= 80)   msg = 'Strong work. Just a couple to revisit.';
+  else if (pct >= 60)   msg = 'A solid base — review the ones you missed and go again.';
+  else                  msg = 'Worth another look. Read the explanations and retry — that\'s how it sticks.';
+
+  result.innerHTML = `
+    <div class="quiz-score-card">
+      <span class="quiz-cat-icon">${cat.icon}</span>
+      <div class="quiz-score-num">${score}/${total}</div>
+      <div class="quiz-score-pct">${pct}%</div>
+      ${isBest ? '<div class="quiz-best-tag">🏅 New best for this category</div>' : ''}
+      <p class="quiz-score-msg">${msg}</p>
+      <div class="quiz-result-actions">
+        <button class="primary" id="quizRetry">Try ${cat.label} again</button>
+        <button class="secondary" id="quizBack">Pick another category</button>
+      </div>
+    </div>`;
+
+  result.querySelector('#quizRetry').addEventListener('click', () => startQuiz(quizActive.category));
+  result.querySelector('#quizBack').addEventListener('click', renderQuizHome);
+}
+
 // ── INIT ──────────────────────────────────────────────────────
 
 if ('serviceWorker' in navigator) {
@@ -1147,6 +1363,7 @@ renderScenarios();
 renderTemplates();
 renderSafety();
 renderReference();
+renderQuizHome();
 updateProgress();
 checkAchievements();
 renderProgress();
