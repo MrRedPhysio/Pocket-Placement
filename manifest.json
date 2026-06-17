@@ -17,5 +17,11 @@
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "screenshot-1-home.png", "sizes": "917x2048", "type": "image/png", "form_factor": "narrow", "label": "Home screen with preparation progress and daily tip" },
+    { "src": "screenshot-2-checklists.png", "sizes": "917x2048", "type": "image/png", "form_factor": "narrow", "label": "Placement readiness checklists" },
+    { "src": "screenshot-3-safety.png", "sizes": "917x2048", "type": "image/png", "form_factor": "narrow", "label": "Safety and guideline hub" },
+    { "src": "screenshot-4-quiz.png", "sizes": "917x2048", "type": "image/png", "form_factor": "narrow", "label": "Knowledge quiz with MSK, neuro and cardioresp categories" }
   ]
 }
