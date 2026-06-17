@@ -1,5 +1,5 @@
 // ============================================================
-// POCKET PLACEMENT v2.0 — app.js
+// POCKET PLACEMENT PRO v2.1 — app.js
 // ============================================================
 
 // ── CHECKLISTS ───────────────────────────────────────────────
@@ -84,30 +84,31 @@ const checklists = [
 ];
 
 // ── SCENARIOS ────────────────────────────────────────────────
+// `ref` links the teaching point back to a source in the references list (by index).
 
 const scenarios = [
   // General
-  {id:'faint', tag:'Emergency', specialty:'General', title:'Patient feels faint during mobilisation', situation:'You are helping a patient stand. They become pale, sweaty and say they feel dizzy.', a:'Stop, support them to a safe position, call for help and follow local policy.', b:'Encourage them to keep walking because movement may help.', correct:'a', why:'Correct. Stop the activity, prevent a fall, call for help and follow the placement escalation process.', wrong:'Not safe. Dizziness can quickly become collapse or a fall. Stop and escalate.'},
-  {id:'consent', tag:'Consent', specialty:'General', title:'Patient asks if you are qualified', situation:'A patient asks: "Are you a real physiotherapist?"', a:'Say you are a supervised physiotherapy student and ask if they are happy for you to be involved.', b:'Say yes because you are part of the physiotherapy team.', correct:'a', why:'Correct. Be honest about your role and gain consent for student involvement.', wrong:'Do not misrepresent your role. Valid consent depends on honest information.'},
-  {id:'refusal', tag:'Shared decision-making', specialty:'General', title:'Patient refuses treatment', situation:'A patient says: "I do not want physiotherapy today."', a:'Respect the refusal, explore the reason if appropriate, and inform your supervisor.', b:'Tell them they must do it because it is in the plan.', correct:'a', why:'Correct. Consent must be voluntary. Explore barriers respectfully and escalate to your educator.', wrong:'Pressuring a patient is not valid consent and damages trust.'},
-  {id:'dontknow', tag:'Professionalism', specialty:'General', title:'You do not know the answer', situation:'Your educator asks why you selected an exercise and your mind goes blank.', a:'Be honest, explain your thinking so far and ask to discuss the reasoning.', b:'Guess confidently so you look prepared.', correct:'a', why:'Correct. Safe students are honest, reflective and supervised.', wrong:'Guessing can be unsafe. Explain what you know and ask for guidance.'},
-  {id:'safeguarding', tag:'Safeguarding', specialty:'General', title:'Unexplained bruising', situation:'During treatment you notice bruising and the patient appears frightened when a relative speaks for them.', a:'Do not confront. Record factual observations and report immediately to your educator according to policy.', b:'Ask the relative directly whether they caused the bruising.', correct:'a', why:'Correct. Keep the patient safe, record facts and escalate through safeguarding procedures.', wrong:'Confrontation may increase risk. Escalate through local safeguarding policy.'},
-  {id:'notes', tag:'Documentation', specialty:'General', title:'You forgot an exact measurement', situation:'You cannot remember the exact distance the patient walked.', a:'Write what you know factually and ask your educator how to handle the missing detail.', b:'Estimate a number so the note looks complete.', correct:'a', why:'Correct. Documentation must be honest and factual.', wrong:'Do not invent or estimate clinical details as fact.'},
-  {id:'professional', tag:'Professionalism', specialty:'General', title:'You witness unprofessional behaviour', situation:'You observe a qualified physiotherapist speaking dismissively and rudely to a patient who is moving slowly.', a:'Do not confront publicly. Record what you observed factually and raise it with your educator or a senior colleague after the interaction.', b:'Immediately challenge the clinician in front of the patient.', correct:'a', why:'Correct. You have a professional duty of candour. Raise concerns privately through appropriate channels.', wrong:'Public confrontation can escalate the situation and harm the patient. Use proper reporting channels.'},
+  {id:'faint', tag:'Emergency', specialty:'General', title:'Patient feels faint during mobilisation', situation:'You are helping a patient stand. They become pale, sweaty and say they feel dizzy.', a:'Stop, support them to a safe position, call for help and follow local policy.', b:'Encourage them to keep walking because movement may help.', correct:'a', why:'Correct. Stop the activity, prevent a fall, call for help and follow the placement escalation process.', wrong:'Not safe. Dizziness can quickly become collapse or a fall. Stop and escalate.', ref:2},
+  {id:'consent', tag:'Consent', specialty:'General', title:'Patient asks if you are qualified', situation:'A patient asks: "Are you a real physiotherapist?"', a:'Say you are a supervised physiotherapy student and ask if they are happy for you to be involved.', b:'Say yes because you are part of the physiotherapy team.', correct:'a', why:'Correct. Be honest about your role and gain consent for student involvement.', wrong:'Do not misrepresent your role. Valid consent depends on honest information.', ref:4},
+  {id:'refusal', tag:'Shared decision-making', specialty:'General', title:'Patient refuses treatment', situation:'A patient says: "I do not want physiotherapy today."', a:'Respect the refusal, explore the reason if appropriate, and inform your supervisor.', b:'Tell them they must do it because it is in the plan.', correct:'a', why:'Correct. Consent must be voluntary. Explore barriers respectfully and escalate to your educator.', wrong:'Pressuring a patient is not valid consent and damages trust.', ref:0},
+  {id:'dontknow', tag:'Professionalism', specialty:'General', title:'You do not know the answer', situation:'Your educator asks why you selected an exercise and your mind goes blank.', a:'Be honest, explain your thinking so far and ask to discuss the reasoning.', b:'Guess confidently so you look prepared.', correct:'a', why:'Correct. Safe students are honest, reflective and supervised.', wrong:'Guessing can be unsafe. Explain what you know and ask for guidance.', ref:5},
+  {id:'safeguarding', tag:'Safeguarding', specialty:'General', title:'Unexplained bruising', situation:'During treatment you notice bruising and the patient appears frightened when a relative speaks for them.', a:'Do not confront. Record factual observations and report immediately to your educator according to policy.', b:'Ask the relative directly whether they caused the bruising.', correct:'a', why:'Correct. Keep the patient safe, record facts and escalate through safeguarding procedures.', wrong:'Confrontation may increase risk. Escalate through local safeguarding policy.', ref:5},
+  {id:'notes', tag:'Documentation', specialty:'General', title:'You forgot an exact measurement', situation:'You cannot remember the exact distance the patient walked.', a:'Write what you know factually and ask your educator how to handle the missing detail.', b:'Estimate a number so the note looks complete.', correct:'a', why:'Correct. Documentation must be honest and factual.', wrong:'Do not invent or estimate clinical details as fact.', ref:5},
+  {id:'professional', tag:'Professionalism', specialty:'General', title:'You witness unprofessional behaviour', situation:'You observe a qualified physiotherapist speaking dismissively and rudely to a patient who is moving slowly.', a:'Do not confront publicly. Record what you observed factually and raise it with your educator or a senior colleague after the interaction.', b:'Immediately challenge the clinician in front of the patient.', correct:'a', why:'Correct. You have a professional duty of candour. Raise concerns privately through appropriate channels.', wrong:'Public confrontation can escalate the situation and harm the patient. Use proper reporting channels.', ref:5},
   // MSK
-  {id:'backpain', tag:'Red flags', specialty:'MSK', title:'Back pain with worrying symptoms', situation:'A patient with back pain mentions new bladder difficulty and numbness around the saddle area.', a:'Stop, do not continue routine treatment, and urgently escalate to your supervisor/medical team.', b:'Continue with gentle exercises and review later.', correct:'a', why:'Correct. These symptoms need urgent escalation. A student should not manage this independently.', wrong:'Not safe. Bladder/bowel or saddle sensory changes with back pain require urgent escalation.'},
-  {id:'knee', tag:'Red flags', specialty:'MSK', title:'Acute knee injury on ward', situation:'A patient twisted their knee getting out of bed. They can weight-bear but are limping and report significant pain (7/10).', a:'Stop, seat the patient, and report to your educator — do not push further until the area is assessed.', b:'Continue the mobilisation slowly as they can still walk.', correct:'a', why:'Correct. A new acute injury needs assessment by a qualified clinician before continuing any mobilisation.', wrong:'Ability to weight-bear does not rule out significant injury. Stop and escalate for proper assessment.'},
+  {id:'backpain', tag:'Red flags', specialty:'MSK', title:'Back pain with worrying symptoms', situation:'A patient with back pain mentions new bladder difficulty and numbness around the saddle area.', a:'Stop, do not continue routine treatment, and urgently escalate to your supervisor/medical team.', b:'Continue with gentle exercises and review later.', correct:'a', why:'Correct. These symptoms need urgent escalation. A student should not manage this independently.', wrong:'Not safe. Bladder/bowel or saddle sensory changes with back pain require urgent escalation.', ref:3},
+  {id:'knee', tag:'Red flags', specialty:'MSK', title:'Acute knee injury on ward', situation:'A patient twisted their knee getting out of bed. They can weight-bear but are limping and report significant pain (7/10).', a:'Stop, seat the patient, and report to your educator — do not push further until the area is assessed.', b:'Continue the mobilisation slowly as they can still walk.', correct:'a', why:'Correct. A new acute injury needs assessment by a qualified clinician before continuing any mobilisation.', wrong:'Ability to weight-bear does not rule out significant injury. Stop and escalate for proper assessment.', ref:5},
   // Respiratory
-  {id:'desaturation', tag:'Emergency', specialty:'Respiratory', title:'SpO₂ drops during exercise', situation:'A patient\'s oxygen saturation falls to 87% on your pulse oximeter during a walking assessment.', a:'Stop the activity immediately, seat the patient, alert the nursing team and your educator.', b:'Continue for 30 more seconds to see if it self-corrects.', correct:'a', why:'Correct. SpO₂ below 90% requires immediate action. Stop, sit, alert, and do not proceed without clinical review.', wrong:'Not safe. Desaturation can deteriorate rapidly. Stop immediately and escalate.'},
+  {id:'desaturation', tag:'Emergency', specialty:'Respiratory', title:'SpO₂ drops during exercise', situation:'A patient\'s oxygen saturation falls to 87% on your pulse oximeter during a walking assessment.', a:'Stop the activity immediately, seat the patient, alert the nursing team and your educator.', b:'Continue for 30 more seconds to see if it self-corrects.', correct:'a', why:'Correct. SpO₂ below 90% requires immediate action. Stop, sit, alert, and do not proceed without clinical review.', wrong:'Not safe. Desaturation can deteriorate rapidly. Stop immediately and escalate.', ref:5},
   // Neuro
-  {id:'aphasia', tag:'Communication', specialty:'Neuro', title:'Patient with aphasia becomes distressed', situation:'A patient post-stroke has expressive aphasia. They are becoming increasingly agitated and trying to communicate something you cannot understand.', a:'Stop, use gesture and visual cues, alert your educator, and consider involving a family member or the speech and language team.', b:'Proceed with the session as planned — the patient agreed at the start.', correct:'a', why:'Correct. Distress in a non-verbal patient is a safety signal. Stop and involve your educator and appropriate team members.', wrong:'Consent is ongoing. Signs of distress mean you must stop and reassess, even if initial consent was given.'},
+  {id:'aphasia', tag:'Communication', specialty:'Neuro', title:'Patient with aphasia becomes distressed', situation:'A patient post-stroke has expressive aphasia. They are becoming increasingly agitated and trying to communicate something you cannot understand.', a:'Stop, use gesture and visual cues, alert your educator, and consider involving a family member or the speech and language team.', b:'Proceed with the session as planned — the patient agreed at the start.', correct:'a', why:'Correct. Distress in a non-verbal patient is a safety signal. Stop and involve your educator and appropriate team members.', wrong:'Consent is ongoing. Signs of distress mean you must stop and reassess, even if initial consent was given.', ref:0},
   // Elderly care
-  {id:'fallrisk', tag:'Falls', specialty:'Elderly care', title:'Older patient afraid of falling', situation:'A patient says they avoid walking because they are scared of falling again.', a:'Acknowledge the fear, check safety factors, and discuss with your educator how to support confidence and activity.', b:'Tell them fear is normal and they should just walk more.', correct:'a', why:'Correct. Falls guidance emphasises individual risk factors, barriers and supporting participation.', wrong:'Dismissive reassurance is not person-centred and may reduce confidence further.'},
-  {id:'capacity', tag:'Consent', specialty:'Elderly care', title:'Patient with dementia seems confused about consent', situation:'A patient with known dementia nods when you explain the exercise session, but seems confused and cannot repeat back what will happen.', a:'Pause, discuss with your educator, and consider whether a formal capacity assessment and best interests process is needed.', b:'Proceed — they nodded, which is implied consent.', correct:'a', why:'Correct. Valid consent requires understanding. A nod alone from a confused patient is not sufficient. Involve your educator.', wrong:'A nod without understanding does not constitute valid consent for a patient who may lack capacity.'},
+  {id:'fallrisk', tag:'Falls', specialty:'Elderly care', title:'Older patient afraid of falling', situation:'A patient says they avoid walking because they are scared of falling again.', a:'Acknowledge the fear, check safety factors, and discuss with your educator how to support confidence and activity.', b:'Tell them fear is normal and they should just walk more.', correct:'a', why:'Correct. Falls guidance emphasises individual risk factors, barriers and supporting participation.', wrong:'Dismissive reassurance is not person-centred and may reduce confidence further.', ref:2},
+  {id:'capacity', tag:'Consent', specialty:'Elderly care', title:'Patient with dementia seems confused about consent', situation:'A patient with known dementia nods when you explain the exercise session, but seems confused and cannot repeat back what will happen.', a:'Pause, discuss with your educator, and consider whether a formal capacity assessment and best interests process is needed.', b:'Proceed — they nodded, which is implied consent.', correct:'a', why:'Correct. Valid consent requires understanding. A nod alone from a confused patient is not sufficient. Involve your educator.', wrong:'A nod without understanding does not constitute valid consent for a patient who may lack capacity.', ref:4},
   // Community
-  {id:'homevisit', tag:'Safeguarding', specialty:'Community', title:'Concerning home conditions on a community visit', situation:'During a home visit you notice the house is very cold, there is no food visible, and the patient seems unkempt and isolated.', a:'Complete your session professionally, make factual observations, and report your concerns to your educator immediately after.', b:'Tell the patient directly that their living conditions are not acceptable.', correct:'a', why:'Correct. Document factual observations and raise concerns through the proper safeguarding and adult social care pathway with your educator.', wrong:'Direct confrontation can damage trust and is not the right pathway. Report through proper channels.'},
+  {id:'homevisit', tag:'Safeguarding', specialty:'Community', title:'Concerning home conditions on a community visit', situation:'During a home visit you notice the house is very cold, there is no food visible, and the patient seems unkempt and isolated.', a:'Complete your session professionally, make factual observations, and report your concerns to your educator immediately after.', b:'Tell the patient directly that their living conditions are not acceptable.', correct:'a', why:'Correct. Document factual observations and raise concerns through the proper safeguarding and adult social care pathway with your educator.', wrong:'Direct confrontation can damage trust and is not the right pathway. Report through proper channels.', ref:5},
   // Paediatric
-  {id:'paediatric', tag:'Consent', specialty:'Paediatric', title:'Child becomes very distressed mid-session', situation:'A child on a paediatric placement becomes very upset and is crying, asking for their parent who has stepped out.', a:'Stop the session, comfort the child, get the parent, and only restart when the child is settled and willing.', b:'Continue quickly to get the session done before the parent returns.', correct:'a', why:'Correct. A child\'s assent is essential and ongoing. Proceeding with a distressed child is ethically wrong and potentially harmful.', wrong:'Never proceed with treatment when a child is clearly distressed and not consenting. Stop immediately.'}
+  {id:'paediatric', tag:'Consent', specialty:'Paediatric', title:'Child becomes very distressed mid-session', situation:'A child on a paediatric placement becomes very upset and is crying, asking for their parent who has stepped out.', a:'Stop the session, comfort the child, get the parent, and only restart when the child is settled and willing.', b:'Continue quickly to get the session done before the parent returns.', correct:'a', why:'Correct. A child\'s assent is essential and ongoing. Proceeding with a distressed child is ethically wrong and potentially harmful.', wrong:'Never proceed with treatment when a child is clearly distressed and not consenting. Stop immediately.', ref:4}
 ];
 
 // ── TEMPLATES ────────────────────────────────────────────────
@@ -128,12 +129,12 @@ const templates = [
 // ── SAFETY ITEMS ─────────────────────────────────────────────
 
 const safetyItems = [
-  {title:'Valid consent', body:'Before assessment or treatment, explain your student role, what you are asking to do, and that the person can decline without affecting their care. Consent is ongoing and can be withdrawn.'},
-  {title:'Shared decision-making', body:'Bring together clinical options, evidence, risks and benefits with the person\'s preferences, goals, beliefs and circumstances. Ask "what matters to you?" rather than only "what is the matter?"'},
-  {title:'Supervision', body:'Students should be clear about the nature and level of supervision, and patients should understand student involvement. If unsure, pause and ask your educator.'},
-  {title:'Falls prevention', body:'Think beyond a score: consider individual risk factors, fear, environment, medicines, footwear, vision, strength, balance and confidence. Escalate falls, near falls and sudden deterioration.'},
-  {title:'Red flags', body:'Urgently escalate concerning symptoms: collapse, chest pain, severe breathlessness, new neurological signs, bladder/bowel or saddle sensory changes with back pain, safeguarding concerns, or sudden deterioration.'},
-  {title:'Documentation', body:'Be factual, respectful and timely. Document consent, relevant findings, intervention, response, safety concerns, escalation and agreed plan. Ask whether your notes need countersigning.'}
+  {id:'consent', title:'Valid consent', body:'Before assessment or treatment, explain your student role, what you are asking to do, and that the person can decline without affecting their care. Consent is ongoing and can be withdrawn.'},
+  {id:'sdm', title:'Shared decision-making', body:'Bring together clinical options, evidence, risks and benefits with the person\'s preferences, goals, beliefs and circumstances. Ask "what matters to you?" rather than only "what is the matter?"'},
+  {id:'supervision', title:'Supervision', body:'Students should be clear about the nature and level of supervision, and patients should understand student involvement. If unsure, pause and ask your educator.'},
+  {id:'falls', title:'Falls prevention', body:'Think beyond a score: consider individual risk factors, fear, environment, medicines, footwear, vision, strength, balance and confidence. Escalate falls, near falls and sudden deterioration.'},
+  {id:'redflags', title:'Red flags', body:'Urgently escalate concerning symptoms: collapse, chest pain, severe breathlessness, new neurological signs, bladder/bowel or saddle sensory changes with back pain, safeguarding concerns, or sudden deterioration.'},
+  {id:'documentation', title:'Documentation', body:'Be factual, respectful and timely. Document consent, relevant findings, intervention, response, safety concerns, escalation and agreed plan. Ask whether your notes need countersigning.'}
 ];
 
 const references = [
@@ -143,6 +144,19 @@ const references = [
   { text:'NICE — Low back pain and sciatica (NG59)', url:'https://www.nice.org.uk/guidance/ng59' },
   { text:'CSP — Consent guidance for physiotherapists', url:'https://www.csp.org.uk/professional-clinical/professional-guidance/consent' },
   { text:'Your university handbook and local placement provider policies', url:null }
+];
+
+// ── ROTATIONS (placement-aware mode) ─────────────────────────
+// Maps a rotation to the specialties, checklists and reference sections that matter most.
+
+const rotations = [
+  { id:'General',      label:'General / not sure yet', specialties:['General'], refs:['vitals','avpu','abbreviations'] },
+  { id:'MSK',          label:'MSK / outpatients',       specialties:['MSK','General'], refs:['mrc','pain','abbreviations'] },
+  { id:'Respiratory',  label:'Respiratory',             specialties:['Respiratory','General'], refs:['vitals','borg','abbreviations'] },
+  { id:'Neuro',        label:'Neuro / stroke',          specialties:['Neuro','General'], refs:['avpu','mrc','abbreviations'] },
+  { id:'Elderly care', label:'Elderly care / care of the elderly', specialties:['Elderly care','General'], refs:['tug','vitals','abbreviations'] },
+  { id:'Community',    label:'Community',               specialties:['Community','General'], refs:['tug','vitals','abbreviations'] },
+  { id:'Paediatric',   label:'Paediatric',              specialties:['Paediatric','General'], refs:['vitals','pain','abbreviations'] }
 ];
 
 // ── QUICK REFERENCE ───────────────────────────────────────────
@@ -265,6 +279,19 @@ const dailyTips = [
   'Every shift, aim to leave the notes tidier than you found them.'
 ];
 
+// ── GUIDED "FIRST DAY" WALKTHROUGH ───────────────────────────
+
+const firstDaySteps = [
+  { icon:'🅿️', title:'Before you walk in', body:'Arrive early. Silence your phone. Take a breath. Your professionalism starts in the car park — how you carry yourself in the corridor matters before you ever reach the ward.' },
+  { icon:'🤝', title:'Find your educator', body:'Introduce yourself by name and confirm who is supervising you today. Ask the single most important question: "What would you like me to do, observe, or stay back from this morning?"' },
+  { icon:'📋', title:'Clarify your scope', body:'Be clear on what you may observe, assist with, practise and document — and what needs countersigning. When you are not sure whether something is within your scope, the answer is to ask, not to assume.' },
+  { icon:'👂', title:'Listen at handover', body:'You are not expected to contribute much yet. Note the patients, the safety concerns and any red flags being flagged. Write down names of staff and any abbreviations you do not recognise to look up later.' },
+  { icon:'🙋', title:'Your first patient contact', body:'Introduce yourself as a supervised physiotherapy student. Gain consent and remind the person they can decline. Check the environment — brakes, footwear, aids, lines, space, call bell — before anything moves.' },
+  { icon:'🛑', title:'If anything feels unsafe', body:'Stop. Support the patient to a safe position. Call for help. You will never be criticised for stopping and escalating early. Use SBAR to hand over your concern clearly.' },
+  { icon:'📝', title:'Before you leave', body:'Complete your notes factually. Tell your educator about anything that concerned you. Ask for one specific piece of feedback, and choose one topic to revise tonight.' },
+  { icon:'🌙', title:'That evening', body:'Write a short reflection while it is fresh: what went well, what was hard, what you will do differently. Five minutes now is worth an hour next week. You got through day one.' }
+];
+
 // ── ACHIEVEMENTS ──────────────────────────────────────────────
 
 const achievements = [
@@ -295,6 +322,11 @@ const achievements = [
     check: s => scenarios.every(sc => s.scenariosTried.includes(sc.id))
   },
   {
+    id:'sharp-shooter', icon:'🎯', title:'Sharp Shooter',
+    desc:'Answer every scenario correctly at least once.',
+    check: s => scenarios.every(sc => (s.scenarioResults && s.scenarioResults[sc.id] === 'correct'))
+  },
+  {
     id:'template-toolkit', icon:'📋', title:'Template Toolkit',
     desc:'Copy all templates.',
     check: s => templates.every(t => s.templatesCopied.includes(t.id))
@@ -312,20 +344,55 @@ const achievements = [
 // ── STATE ─────────────────────────────────────────────────────
 
 const state = JSON.parse(localStorage.getItem('pp-state') || '{}');
-state.checked         ||= {};
-state.scenariosTried  ||= [];
-state.templatesCopied ||= [];
-state.earnedBadges    ||= [];
-state.streak          ||= 0;
-state.lastVisit       ||= null;
-state.darkMode        ||= false;
-state.onboarded       ||= false;
-state.specialtyFilter ||= 'All';
+state.checked          ||= {};
+state.scenariosTried   ||= [];
+state.scenarioResults  ||= {};   // { scenarioId: 'correct' | 'incorrect' }
+state.scenarioSeen     ||= {};   // { scenarioId: timestamp } for spaced repetition
+state.templatesCopied  ||= [];
+state.earnedBadges     ||= [];
+state.streak           ||= 0;
+state.lastVisit        ||= null;
+state.darkMode         ||= false;
+state.onboarded        ||= false;
+state.specialtyFilter  ||= 'All';
+state.rotation         ||= null;       // chosen rotation id
+state.placementDate    ||= null;       // ISO date string
+state.firstDayDone     ||= false;
+
+function persist() { localStorage.setItem('pp-state', JSON.stringify(state)); }
 
 function save() {
-  localStorage.setItem('pp-state', JSON.stringify(state));
+  persist();
   updateProgress();
   checkAchievements();
+}
+
+// ── SPACED REPETITION ─────────────────────────────────────────
+// Intervals (days) after which a tried scenario becomes "due" for review.
+const REVIEW_INTERVALS = { correct: [1, 3, 7, 14], incorrect: [1, 1, 3] };
+const DAY = 86400000;
+
+function scenarioReviewCount() {
+  const now = Date.now();
+  return scenarios.filter(sc => {
+    const seen = state.scenarioSeen[sc.id];
+    if (!seen) return false;
+    const result = state.scenarioResults[sc.id];
+    // Incorrect answers come due faster; correct ones spread out.
+    const interval = (result === 'incorrect' ? 1 : 3) * DAY;
+    return (now - seen) >= interval;
+  }).length;
+}
+
+function scenariosDueForReview() {
+  const now = Date.now();
+  return scenarios.filter(sc => {
+    const seen = state.scenarioSeen[sc.id];
+    if (!seen) return false;
+    const result = state.scenarioResults[sc.id];
+    const interval = (result === 'incorrect' ? 1 : 3) * DAY;
+    return (now - seen) >= interval;
+  });
 }
 
 // ── TOAST ─────────────────────────────────────────────────────
@@ -336,6 +403,68 @@ function toast(message, type = '') {
   t.className = ['show', type].filter(Boolean).join(' ');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => { t.className = ''; }, 2400);
+}
+
+// ── CUSTOM CONFIRM DIALOG (replaces native confirm) ───────────
+
+function confirmDialog({ title, message, confirmLabel = 'Confirm', cancelLabel = 'Cancel', danger = false }) {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box confirm-box" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <h2 id="confirmTitle">${title}</h2>
+        <p class="modal-sub">${message}</p>
+        <div class="confirm-actions">
+          <button class="secondary" data-act="cancel">${cancelLabel}</button>
+          <button class="${danger ? 'danger-btn' : 'primary'}" data-act="ok">${confirmLabel}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const okBtn = overlay.querySelector('[data-act="ok"]');
+    const cancelBtn = overlay.querySelector('[data-act="cancel"]');
+    const close = (result) => {
+      releaseFocusTrap(overlay);
+      overlay.remove();
+      resolve(result);
+    };
+    okBtn.addEventListener('click', () => close(true));
+    cancelBtn.addEventListener('click', () => close(false));
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(false); });
+    trapFocus(overlay, () => close(false));
+    cancelBtn.focus();
+  });
+}
+
+// ── FOCUS TRAP (for modals) ───────────────────────────────────
+
+const _focusTraps = new WeakMap();
+
+function trapFocus(container, onEscape) {
+  const selector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])';
+  const previouslyFocused = document.activeElement;
+  function handler(e) {
+    if (e.key === 'Escape' && onEscape) { e.preventDefault(); onEscape(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = [...container.querySelectorAll(selector)].filter(el => el.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  document.addEventListener('keydown', handler);
+  _focusTraps.set(container, { handler, previouslyFocused });
+}
+
+function releaseFocusTrap(container) {
+  const data = _focusTraps.get(container);
+  if (!data) return;
+  document.removeEventListener('keydown', data.handler);
+  if (data.previouslyFocused && data.previouslyFocused.focus) {
+    try { data.previouslyFocused.focus(); } catch (e) {}
+  }
+  _focusTraps.delete(container);
 }
 
 // ── DARK MODE ─────────────────────────────────────────────────
@@ -356,18 +485,32 @@ document.getElementById('darkToggle').addEventListener('click', () => {
 
 function updateStreak() {
   const today     = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  const yesterday = new Date(Date.now() - DAY).toDateString();
   if (state.lastVisit === today) return;
   state.streak   = (state.lastVisit === yesterday) ? state.streak + 1 : 1;
   state.lastVisit = today;
-  localStorage.setItem('pp-state', JSON.stringify(state));
+  persist();
 }
 
 // ── DAILY TIP ─────────────────────────────────────────────────
 
 function getDailyTip() {
-  const idx = Math.floor(Date.now() / 86400000) % dailyTips.length;
+  const idx = Math.floor(Date.now() / DAY) % dailyTips.length;
   return dailyTips[idx];
+}
+
+// ── PLACEMENT COUNTDOWN ───────────────────────────────────────
+
+function daysUntilPlacement() {
+  if (!state.placementDate) return null;
+  const target = new Date(state.placementDate + 'T00:00:00');
+  const today  = new Date(); today.setHours(0,0,0,0);
+  return Math.round((target - today) / DAY);
+}
+
+function rotationLabel(id) {
+  const r = rotations.find(r => r.id === id);
+  return r ? r.label : id;
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────
@@ -376,33 +519,40 @@ let currentView = 'home';
 
 function setView(id) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-  document.getElementById(id).classList.add('active-view');
+  const target = document.getElementById(id);
+  if (!target) return;
+  target.classList.add('active-view');
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === id));
   currentView = id;
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Trigger view-specific renders that need fresh state
   if (id === 'progress') renderProgress();
   if (id === 'home')     renderHome();
+  if (id === 'scenarios') renderScenarios();
 }
 
 document.querySelectorAll('.tab').forEach(btn =>
   btn.addEventListener('click', () => setView(btn.dataset.view))
 );
-document.querySelectorAll('[data-jump]').forEach(el =>
-  el.addEventListener('click', () => setView(el.dataset.jump))
-);
+document.addEventListener('click', e => {
+  const jump = e.target.closest('[data-jump]');
+  if (jump) setView(jump.dataset.jump);
+});
 
 // ── SEARCH ────────────────────────────────────────────────────
 
 let searchQuery = '';
 
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchQuery = e.target.value.toLowerCase().trim();
+function rerenderCurrent() {
   if (currentView === 'checklists') renderChecklists();
   else if (currentView === 'scenarios') renderScenarios();
   else if (currentView === 'templates') renderTemplates();
   else if (currentView === 'safety')    renderSafety();
   else if (currentView === 'reference') renderReference();
+}
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  rerenderCurrent();
 });
 
 document.getElementById('searchToggle').addEventListener('click', () => {
@@ -414,17 +564,12 @@ document.getElementById('searchToggle').addEventListener('click', () => {
   } else {
     searchQuery = '';
     document.getElementById('searchInput').value = '';
-    // Re-render current view without filter
-    if (currentView === 'checklists') renderChecklists();
-    else if (currentView === 'scenarios') renderScenarios();
-    else if (currentView === 'templates') renderTemplates();
-    else if (currentView === 'safety')    renderSafety();
-    else if (currentView === 'reference') renderReference();
+    rerenderCurrent();
   }
 });
 
 function matches(text) {
-  return !searchQuery || text.toLowerCase().includes(searchQuery);
+  return !searchQuery || (text || '').toLowerCase().includes(searchQuery);
 }
 
 // ── SPECIALTY FILTER ──────────────────────────────────────────
@@ -433,6 +578,7 @@ const filterSelect = document.getElementById('specialtyFilter');
 filterSelect.value = state.specialtyFilter;
 filterSelect.addEventListener('change', e => {
   state.specialtyFilter = e.target.value;
+  state.reviewMode = false;
   renderScenarios();
 });
 
@@ -440,6 +586,103 @@ filterSelect.addEventListener('change', e => {
 
 function renderHome() {
   document.getElementById('dailyTip').textContent = getDailyTip();
+  renderPlacementBanner();
+  renderReviewPrompt();
+}
+
+function renderPlacementBanner() {
+  const host = document.getElementById('placementBanner');
+  if (!host) return;
+  if (!state.rotation) {
+    host.innerHTML = `
+      <div class="placement-setup">
+        <span class="tip-label">📍 Personalise your prep</span>
+        <p>Tell us your placement and we'll put the most relevant scenarios, checklists and reference values first.</p>
+        <button class="primary" id="setPlacementBtn">Set my placement</button>
+      </div>`;
+    document.getElementById('setPlacementBtn').addEventListener('click', openPlacementDialog);
+    return;
+  }
+  const days = daysUntilPlacement();
+  let countdown = '';
+  if (days !== null) {
+    if (days > 1)       countdown = `<strong>${days} days</strong> until your placement starts`;
+    else if (days === 1) countdown = `<strong>Tomorrow</strong> — your placement starts`;
+    else if (days === 0) countdown = `<strong>Today</strong> — good luck out there`;
+    else                countdown = `You're <strong>${Math.abs(days)} day${Math.abs(days)!==1?'s':''}</strong> into your placement`;
+  }
+  host.innerHTML = `
+    <div class="placement-active">
+      <div class="placement-row">
+        <span class="placement-pill">📍 ${rotationLabel(state.rotation)}</span>
+        <button class="ghost" id="editPlacementBtn">Edit</button>
+      </div>
+      ${countdown ? `<p class="placement-countdown">${countdown}</p>` : ''}
+      <p class="placement-hint">Your home is tuned to this rotation. Jump straight in:</p>
+      <div class="placement-actions">
+        <button class="secondary" data-jump="scenarios">Relevant scenarios</button>
+        <button class="secondary" data-jump="reference">Key reference values</button>
+      </div>
+    </div>`;
+  document.getElementById('editPlacementBtn').addEventListener('click', openPlacementDialog);
+}
+
+function renderReviewPrompt() {
+  const host = document.getElementById('reviewPrompt');
+  if (!host) return;
+  const due = scenarioReviewCount();
+  if (due === 0) { host.hidden = true; host.innerHTML = ''; return; }
+  host.hidden = false;
+  host.innerHTML = `
+    <span class="tip-label">🔁 Spaced review</span>
+    <p>You have <strong>${due} scenario${due!==1?'s':''}</strong> ready to review. Revisiting them now is how the safe responses actually stick.</p>
+    <button class="primary" id="startReviewBtn">Start review</button>`;
+  document.getElementById('startReviewBtn').addEventListener('click', () => {
+    state.reviewMode = true;
+    setView('scenarios');
+  });
+}
+
+// ── PLACEMENT DIALOG ──────────────────────────────────────────
+
+function openPlacementDialog() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  const today = new Date().toISOString().split('T')[0];
+  overlay.innerHTML = `
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="placeTitle">
+      <h2 id="placeTitle">Your placement</h2>
+      <p class="modal-sub">We'll prioritise the content that matters most for your rotation.</p>
+      <label class="field-label" for="rotationSelect">Which rotation?</label>
+      <select id="rotationSelect" class="field-select">
+        ${rotations.map(r => `<option value="${r.id}" ${state.rotation===r.id?'selected':''}>${r.label}</option>`).join('')}
+      </select>
+      <label class="field-label" for="placementDateInput">Start date (optional)</label>
+      <input type="date" id="placementDateInput" class="field-input" min="${today}" value="${state.placementDate || ''}" />
+      <div class="confirm-actions">
+        <button class="secondary" data-act="cancel">Cancel</button>
+        <button class="primary" data-act="save">Save</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const close = () => { releaseFocusTrap(overlay); overlay.remove(); };
+  overlay.querySelector('[data-act="cancel"]').addEventListener('click', close);
+  overlay.querySelector('[data-act="save"]').addEventListener('click', () => {
+    state.rotation = overlay.querySelector('#rotationSelect').value;
+    state.placementDate = overlay.querySelector('#placementDateInput').value || null;
+    // Pre-set the scenario filter to the rotation's primary specialty for convenience.
+    const rot = rotations.find(r => r.id === state.rotation);
+    if (rot) { state.specialtyFilter = rot.specialties[0]; filterSelect.value = state.specialtyFilter; }
+    persist();
+    close();
+    renderHome();
+    renderScenarios();
+    renderReference();
+    toast('Placement saved ✓', 'success');
+  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  trapFocus(overlay, close);
+  overlay.querySelector('#rotationSelect').focus();
 }
 
 // ── RENDER: CHECKLISTS ────────────────────────────────────────
@@ -488,34 +731,60 @@ function renderChecklists() {
 
 function renderScenarios() {
   const root = document.getElementById('scenarioList');
+  const banner = document.getElementById('scenarioModeBanner');
   let list = scenarios;
-  if (state.specialtyFilter !== 'All') {
-    list = list.filter(s => s.specialty === state.specialtyFilter);
+
+  if (state.reviewMode) {
+    list = scenariosDueForReview();
+    if (banner) {
+      banner.hidden = false;
+      banner.innerHTML = `🔁 <strong>Review mode</strong> — ${list.length} scenario${list.length!==1?'s':''} due. <button class="link-btn" id="exitReview">Exit review</button>`;
+      banner.querySelector('#exitReview').addEventListener('click', () => { state.reviewMode = false; renderScenarios(); });
+    }
+    if (!list.length) {
+      root.innerHTML = '<p class="empty-state">Nothing due for review right now. Come back in a day or two.</p>';
+      return;
+    }
+  } else {
+    if (banner) { banner.hidden = true; banner.innerHTML = ''; }
+    if (state.specialtyFilter !== 'All') {
+      list = list.filter(s => s.specialty === state.specialtyFilter);
+    }
+    if (searchQuery) {
+      list = list.filter(s => matches(s.title) || matches(s.situation) || matches(s.tag) || matches(s.specialty));
+    }
+    if (!list.length) {
+      root.innerHTML = '<p class="empty-state">No scenarios match your filter.</p>';
+      return;
+    }
   }
-  if (searchQuery) {
-    list = list.filter(s => matches(s.title) || matches(s.situation) || matches(s.tag) || matches(s.specialty));
-  }
-  if (!list.length) {
-    root.innerHTML = '<p class="empty-state">No scenarios match your filter.</p>';
-    return;
-  }
-  root.innerHTML = list.map(s => `
+
+  root.innerHTML = list.map(s => {
+    const result = state.scenarioResults[s.id];
+    let statusLabel = 'New';
+    if (result === 'correct')   statusLabel = '✓ Correct';
+    else if (result === 'incorrect') statusLabel = '↻ Review';
+    else if (state.scenariosTried.includes(s.id)) statusLabel = '✓ Tried';
+    const refLink = (s.ref != null && references[s.ref] && references[s.ref].url)
+      ? `<a class="scenario-source" href="${references[s.ref].url}" target="_blank" rel="noopener noreferrer">📖 Source: ${references[s.ref].text}</a>`
+      : '';
+    return `
     <article class="card scenario" data-id="${s.id}">
       <div class="card-head">
         <div class="badge-row">
           <span class="badge">${s.tag}</span>
           <span class="badge badge-specialty">${s.specialty}</span>
         </div>
-        <span class="mini-progress">${state.scenariosTried.includes(s.id) ? '✓ Tried' : 'New'}</span>
+        <span class="mini-progress">${statusLabel}</span>
       </div>
       <h3>${s.title}</h3>
       <p class="situation">${s.situation}</p>
       <button class="choice" data-answer="a">A. ${s.a}</button>
       <button class="choice" data-answer="b">B. ${s.b}</button>
-      <div class="result good">✅ ${s.why}</div>
+      <div class="result good">✅ ${s.why}${refLink}</div>
       <div class="result bad">❌ ${s.wrong}</div>
-    </article>
-  `).join('');
+    </article>`;
+  }).join('');
 
   root.querySelectorAll('.choice').forEach(btn =>
     btn.addEventListener('click', e => {
@@ -526,6 +795,9 @@ function renderScenarios() {
       const correct = e.target.dataset.answer === scenario.correct;
       card.querySelector(correct ? '.good' : '.bad').style.display = 'block';
       if (!state.scenariosTried.includes(scenario.id)) state.scenariosTried.push(scenario.id);
+      // Record correctness (don't downgrade a previous 'correct' to 'incorrect' silently — keep latest attempt)
+      state.scenarioResults[scenario.id] = correct ? 'correct' : 'incorrect';
+      state.scenarioSeen[scenario.id] = Date.now();
       save();
     })
   );
@@ -555,11 +827,15 @@ function renderTemplates() {
   root.querySelectorAll('.copy').forEach(btn =>
     btn.addEventListener('click', async e => {
       const tmpl = templates.find(t => t.id === e.target.dataset.id);
-      await navigator.clipboard.writeText(tmpl.content);
+      try {
+        await navigator.clipboard.writeText(tmpl.content);
+        toast('Template copied ✓', 'success');
+      } catch {
+        toast('Press and hold to copy on this device', '');
+      }
       if (!state.templatesCopied.includes(tmpl.id)) state.templatesCopied.push(tmpl.id);
       save();
       renderTemplates();
-      toast('Template copied ✓', 'success');
     })
   );
 }
@@ -591,16 +867,30 @@ function renderSafety() {
 
 function renderReference() {
   const root = document.getElementById('referenceList');
-  const list = quickRefSections.filter(section =>
+  let sections = quickRefSections;
+  // Placement-aware ordering: float the rotation's relevant sections to the top.
+  if (state.rotation) {
+    const rot = rotations.find(r => r.id === state.rotation);
+    if (rot) {
+      const priority = rot.refs;
+      sections = [...quickRefSections].sort((a, b) => {
+        const ai = priority.indexOf(a.id), bi = priority.indexOf(b.id);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+      });
+    }
+  }
+  const list = sections.filter(section =>
     matches(section.title) || section.items.some(item => matches(item.label) || matches(item.value) || matches(item.note))
   );
   if (!list.length) {
     root.innerHTML = '<p class="empty-state">No reference items match your search.</p>';
     return;
   }
-  root.innerHTML = list.map(section => `
-    <article class="card ref-card">
-      <h3><span class="ref-icon">${section.icon}</span>${section.title}</h3>
+  root.innerHTML = list.map(section => {
+    const relevant = state.rotation && rotations.find(r => r.id === state.rotation)?.refs.includes(section.id);
+    return `
+    <article class="card ref-card ${relevant ? 'ref-relevant' : ''}">
+      <h3><span class="ref-icon">${section.icon}</span>${section.title}${relevant ? '<span class="rel-tag">For your rotation</span>' : ''}</h3>
       <table class="ref-table">
         ${section.items.map(item => `
           <tr class="${(searchQuery && (matches(item.label) || matches(item.value))) ? 'highlight-row' : ''}">
@@ -610,8 +900,8 @@ function renderReference() {
           </tr>
         `).join('')}
       </table>
-    </article>
-  `).join('');
+    </article>`;
+  }).join('');
 }
 
 // ── RENDER: PROGRESS ──────────────────────────────────────────
@@ -634,13 +924,15 @@ function renderProgress() {
 // ── ACHIEVEMENTS ──────────────────────────────────────────────
 
 function checkAchievements() {
+  let changed = false;
   achievements.forEach(ach => {
     if (!state.earnedBadges.includes(ach.id) && ach.check(state)) {
       state.earnedBadges.push(ach.id);
-      localStorage.setItem('pp-state', JSON.stringify(state));
+      changed = true;
       setTimeout(() => toast(`${ach.icon} Achievement unlocked: ${ach.title}!`, 'achievement'), 400);
     }
   });
+  if (changed) persist();
   if (currentView === 'progress') renderProgress();
 }
 
@@ -675,37 +967,119 @@ function updateProgress() {
   }
 }
 
-// ── EVENT LISTENERS ───────────────────────────────────────────
+// ── GUIDED "FIRST DAY" WALKTHROUGH ───────────────────────────
 
-document.getElementById('resetProgress').addEventListener('click', () => {
-  if (!confirm('Reset all Pocket Placement progress?')) return;
-  localStorage.removeItem('pp-state');
-  location.reload();
-});
+let firstDayIndex = 0;
 
-document.getElementById('exportProgress').addEventListener('click', async () => {
+function openFirstDay() {
+  firstDayIndex = 0;
+  const overlay = document.createElement('div');
+  overlay.id = 'firstDayOverlay';
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box walkthrough" role="dialog" aria-modal="true" aria-labelledby="fdTitle">
+      <div class="wt-progress"><div id="wtBar"></div></div>
+      <div class="wt-icon" id="fdIcon"></div>
+      <h2 id="fdTitle"></h2>
+      <p class="wt-body" id="fdBody"></p>
+      <div class="wt-step-count" id="fdCount"></div>
+      <div class="confirm-actions wt-actions">
+        <button class="secondary" id="fdBack">Back</button>
+        <button class="primary" id="fdNext">Next</button>
+      </div>
+      <button class="link-btn wt-skip" id="fdSkip">Skip walkthrough</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  const close = () => { releaseFocusTrap(overlay); overlay.remove(); };
+  overlay.querySelector('#fdSkip').addEventListener('click', close);
+  overlay.querySelector('#fdBack').addEventListener('click', () => { if (firstDayIndex > 0) { firstDayIndex--; paintFirstDay(); } });
+  overlay.querySelector('#fdNext').addEventListener('click', () => {
+    if (firstDayIndex < firstDaySteps.length - 1) { firstDayIndex++; paintFirstDay(); }
+    else { state.firstDayDone = true; persist(); close(); toast('You\'re ready for day one 💪', 'success'); }
+  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  trapFocus(overlay, close);
+  paintFirstDay();
+  overlay.querySelector('#fdNext').focus();
+}
+
+function paintFirstDay() {
+  const step = firstDaySteps[firstDayIndex];
+  document.getElementById('fdIcon').textContent = step.icon;
+  document.getElementById('fdTitle').textContent = step.title;
+  document.getElementById('fdBody').textContent = step.body;
+  document.getElementById('fdCount').textContent = `Step ${firstDayIndex + 1} of ${firstDaySteps.length}`;
+  document.getElementById('wtBar').style.width = `${((firstDayIndex + 1) / firstDaySteps.length) * 100}%`;
+  document.getElementById('fdBack').disabled = firstDayIndex === 0;
+  document.getElementById('fdNext').textContent = firstDayIndex === firstDaySteps.length - 1 ? 'Finish' : 'Next';
+}
+
+const firstDayBtn = document.getElementById('firstDayBtn');
+if (firstDayBtn) firstDayBtn.addEventListener('click', openFirstDay);
+
+// ── EXPORT (upgraded) ─────────────────────────────────────────
+
+function buildExportText() {
   const total   = checklists.reduce((n, l) => n + l.steps.length, 0);
   const done    = Object.values(state.checked).filter(Boolean).length;
   const badges  = achievements.filter(a => state.earnedBadges.includes(a.id))
                               .map(a => `${a.icon} ${a.title}`).join(', ') || 'None yet';
-  const text = [
-    '=== POCKET PLACEMENT PROGRESS SUMMARY ===',
+
+  // Which scenarios were answered incorrectly (most recent attempt)
+  const wrong = scenarios.filter(s => state.scenarioResults[s.id] === 'incorrect')
+                         .map(s => `   • ${s.title} (${s.specialty})`);
+  const untried = scenarios.filter(s => !state.scenariosTried.includes(s.id))
+                           .map(s => `   • ${s.title} (${s.specialty})`);
+
+  // Safety topics not yet opened (proxy: checklist categories not started)
+  const safetyGaps = checklists.filter(l => !l.steps.some((_, i) => state.checked[`${l.id}-${i}`]))
+                               .map(l => `   • ${l.title}`);
+
+  const lines = [
+    '=== POCKET PLACEMENT PRO — PROGRESS SUMMARY ===',
     `Date: ${new Date().toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}`,
+  ];
+  if (state.rotation) {
+    lines.push(`Placement: ${rotationLabel(state.rotation)}`);
+    const d = daysUntilPlacement();
+    if (d !== null) lines.push(`Countdown: ${d > 0 ? d + ' day(s) to go' : d === 0 ? 'starts today' : Math.abs(d) + ' day(s) in'}`);
+  }
+  lines.push(
     '',
-    `Checklist steps completed : ${done}/${total} (${Math.round((done / total) * 100)}%)`,
+    `Checklist steps completed : ${done}/${total} (${total ? Math.round((done / total) * 100) : 0}%)`,
     `Scenarios practised       : ${state.scenariosTried.length}/${scenarios.length}`,
+    `Scenarios correct         : ${scenarios.filter(s => state.scenarioResults[s.id] === 'correct').length}/${scenarios.length}`,
     `Templates copied          : ${state.templatesCopied.length}/${templates.length}`,
     `Daily streak              : ${state.streak} day${state.streak !== 1 ? 's' : ''}`,
     `Badges earned             : ${badges}`,
-    '',
-    '--- Reflection prompts ---',
-    '1. What do I feel more confident about?',
-    '2. What do I still need to ask my educator?',
-    '3. Which safety topic should I revise before my next shift?',
-    '4. What feedback have I received and how will I act on it?',
-    '5. What is one thing I observed today that I want to read more about?'
-  ].join('\n');
+    ''
+  );
 
+  if (wrong.length) {
+    lines.push('--- Scenarios to revisit (answered incorrectly) ---', ...wrong, '');
+  }
+  if (untried.length) {
+    lines.push('--- Scenarios not yet attempted ---', ...untried, '');
+  }
+  if (safetyGaps.length) {
+    lines.push('--- Checklists not yet started ---', ...safetyGaps, '');
+  }
+
+  lines.push(
+    '--- Reflection (HCPC / CSP aligned) ---',
+    'Identify (HCPC 11): What did I do that was safe, effective and within my scope?',
+    'Analyse: Which decision or moment challenged me, and why?',
+    'Apply (HCPC 13): What knowledge or guidance underpinned my actions?',
+    'Plan: Which safety topic or scenario will I revise before my next shift?',
+    'Act on feedback: What feedback did I receive and how will I respond to it?',
+    'Wellbeing: How am I managing placement demands, and what support do I need?'
+  );
+
+  return lines.join('\n');
+}
+
+document.getElementById('exportProgress').addEventListener('click', async () => {
+  const text = buildExportText();
   try {
     await navigator.clipboard.writeText(text);
     toast('Progress summary copied ✓', 'success');
@@ -716,16 +1090,54 @@ document.getElementById('exportProgress').addEventListener('click', async () => 
   }
 });
 
-// Onboarding modal
+const downloadBtn = document.getElementById('downloadProgress');
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', () => {
+    const text = buildExportText();
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().split('T')[0];
+    a.href = url;
+    a.download = `pocket-placement-pro-summary-${stamp}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast('Summary downloaded ✓', 'success');
+  });
+}
+
+// ── RESET (custom dialog) ─────────────────────────────────────
+
+document.getElementById('resetProgress').addEventListener('click', async () => {
+  const ok = await confirmDialog({
+    title: 'Reset progress?',
+    message: 'This clears all your Pocket Placement Pro progress on this device — checklists, scenarios, badges and streak. This cannot be undone.',
+    confirmLabel: 'Reset everything',
+    cancelLabel: 'Keep my progress',
+    danger: true
+  });
+  if (!ok) return;
+  localStorage.removeItem('pp-state');
+  location.reload();
+});
+
+// ── ONBOARDING MODAL ──────────────────────────────────────────
+
+const onboardingModal = document.getElementById('onboardingModal');
 document.getElementById('onboardingClose').addEventListener('click', () => {
-  document.getElementById('onboardingModal').hidden = true;
+  releaseFocusTrap(onboardingModal);
+  onboardingModal.hidden = true;
   state.onboarded = true;
-  localStorage.setItem('pp-state', JSON.stringify(state));
+  persist();
 });
 
 // ── INIT ──────────────────────────────────────────────────────
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').catch(() => {});
+}
 
 applyDarkMode(state.darkMode);
 updateStreak();
@@ -740,5 +1152,7 @@ checkAchievements();
 renderProgress();
 
 if (!state.onboarded) {
-  document.getElementById('onboardingModal').hidden = false;
+  onboardingModal.hidden = false;
+  trapFocus(onboardingModal, () => document.getElementById('onboardingClose').click());
+  setTimeout(() => document.getElementById('onboardingClose').focus(), 50);
 }

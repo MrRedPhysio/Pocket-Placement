@@ -90,6 +90,19 @@
           <p id="dailyTip"></p>
         </section>
 
+        <section id="placementBanner" class="placement-banner"></section>
+
+        <section id="reviewPrompt" class="tip-box review-prompt" hidden></section>
+
+        <section class="first-day-cta">
+          <span aria-hidden="true">🧭</span>
+          <div>
+            <h2>First day nerves?</h2>
+            <p>Walk through exactly what to do from the car park to that evening's reflection.</p>
+          </div>
+          <button class="primary" id="firstDayBtn">Start walkthrough</button>
+        </section>
+
         <div class="grid">
           <article class="feature-card" data-jump="checklists">
             <span aria-hidden="true">✅</span>
@@ -160,6 +173,7 @@
             <option value="Paediatric">Paediatric</option>
           </select>
         </div>
+        <div id="scenarioModeBanner" class="mode-banner" hidden></div>
         <div id="scenarioList" class="stack"></div>
       </section>
 
@@ -214,7 +228,10 @@
         <h3 class="section-sub">Achievements</h3>
         <div id="achievementList" class="achievement-grid"></div>
 
-        <button id="exportProgress" class="primary export-btn">Copy progress summary</button>
+        <div class="export-actions">
+          <button id="exportProgress" class="primary export-btn">Copy progress summary</button>
+          <button id="downloadProgress" class="secondary export-btn">Download as file</button>
+        </div>
         <pre id="exportBox" class="export-box" hidden></pre>
       </section>
 
