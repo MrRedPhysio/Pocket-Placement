@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pocket Placement Pro | NHS-aligned placement prep for physio students</title>
+  <meta name="description" content="The only app built for first-year physiotherapy placement students. 15 scenarios, 10 templates, NHS guidance. £7.99 one-time." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:    #0e1c2f;
+      --bg2:   #132338;
+      --bg3:   #172a42;
+      --teal:  #00e5d4;
+      --teal2: #00b8aa;
+      --blue:  #4d9fff;
+      --purple:#a78bfa;
+      --text:  #e8f4ff;
+      --muted: #6b90aa;
+      --border: rgba(0,229,212,0.18);
+      --glow:  rgba(0,229,212,0.25);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* CANVAS PARTICLES */
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* AURORA */
+    .aurora {
+      position: fixed;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 140vw; height: 600px;
+      background: radial-gradient(ellipse at 30% 50%, rgba(0,229,212,0.12) 0%, transparent 55%),
+                  radial-gradient(ellipse at 70% 50%, rgba(77,159,255,0.10) 0%, transparent 55%),
+                  radial-gradient(ellipse at 50% 80%, rgba(167,139,250,0.08) 0%, transparent 55%);
+      animation: aurora 12s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes aurora { 0%,100%{opacity:.7;transform:translateX(-50%) scaleX(1)} 50%{opacity:1;transform:translateX(-48%) scaleX(1.05)} }
+
+    /* GRID */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(0,229,212,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,229,212,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+    }
+
+    .above { position: relative; z-index: 2; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.9rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(14,28,47,0.8);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-logo {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-family: Georgia, serif; font-size: 13px; font-weight: 700; color: #0e1c2f;
+      box-shadow: 0 0 18px rgba(0,229,212,0.5);
+    }
+    .nav-name { font-size: 0.95rem; font-weight: 700; color: white; }
+    .nav-cta {
+      background: var(--teal); color: #0e1c2f;
+      padding: 0.55rem 1.4rem; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 800;
+      box-shadow: 0 0 22px rgba(0,229,212,0.4);
+      transition: all 0.2s;
+    }
+    .nav-cta:hover { box-shadow: 0 0 38px rgba(0,229,212,0.65); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 9rem 2rem 6rem;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,229,212,0.1);
+      border: 1px solid rgba(0,229,212,0.3);
+      color: var(--teal);
+      padding: 0.4rem 1.1rem; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulseDot 2s infinite; }
+    @keyframes pulseDot { 0%,100%{box-shadow:0 0 0 0 rgba(0,229,212,0.6)} 50%{box-shadow:0 0 0 6px rgba(0,229,212,0)} }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 4.8rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .grad { background: linear-gradient(135deg, var(--teal) 0%, var(--blue) 50%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .hero-sub {
+      font-size: 1.15rem; color: #8aaccc; max-width: 540px; margin: 0 auto 2.75rem; line-height: 1.75;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-btn-wrap { animation: fadeUp 0.7s 0.3s ease both; }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      color: #0e1c2f; padding: 1.05rem 2.4rem; border-radius: 12px;
+      font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em;
+      box-shadow: 0 0 0 1px rgba(0,229,212,0.3), 0 0 40px rgba(0,229,212,0.35), 0 8px 24px rgba(0,0,0,0.4);
+      transition: all 0.25s;
+    }
+    .btn-hero:hover { box-shadow: 0 0 0 1px rgba(0,229,212,0.5), 0 0 60px rgba(0,229,212,0.55), 0 12px 32px rgba(0,0,0,0.5); transform: translateY(-3px); }
+    .arr { transition: transform 0.2s; }
+    .btn-hero:hover .arr { transform: translateX(5px); }
+    .hero-note { margin-top: 1.2rem; font-size: 0.83rem; color: #4a7a8a; animation: fadeUp 0.7s 0.4s ease both; }
+
+    /* FLOATING CARDS */
+    .float-cards {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .float-card {
+      background: rgba(19,35,56,0.85);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1rem 1.4rem;
+      backdrop-filter: blur(16px);
+      display: flex; align-items: center; gap: 0.75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: floatCard 5s ease-in-out infinite;
+    }
+    .float-card:nth-child(2) { animation-delay: 0.8s; }
+    .float-card:nth-child(3) { animation-delay: 1.6s; }
+    @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .fc-icon { font-size: 1.5rem; }
+    .fc-text { font-size: 0.85rem; font-weight: 600; color: white; }
+    .fc-sub { font-size: 0.72rem; color: var(--muted); }
+
+    /* STATS */
+    .stats-band {
+      display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+      background: rgba(19,35,56,0.6); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .stat-item {
+      flex: 1; min-width: 140px; text-align: center;
+      padding: 2.5rem 1rem;
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(0,229,212,0.04); }
+    .stat-num {
+      font-size: 3rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-lbl { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.4rem; }
+
+    /* TRUST PILLS */
+    .trust-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; padding: 2.5rem 2rem; }
+    .tpill {
+      display: flex; align-items: center; gap: 0.45rem;
+      background: rgba(19,35,56,0.7); border: 1px solid var(--border);
+      padding: 0.45rem 1rem; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 600; color: #8aaccc;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
+    }
+    .tpill:hover { border-color: var(--teal); color: var(--teal); }
+    .tpill-check { color: var(--teal); font-size: 0.85rem; }
+
+    /* GLOW LINE */
+    .glow-line { height: 1px; background: linear-gradient(90deg, transparent, var(--teal), var(--blue), transparent); opacity: 0.4; }
+
+    /* SECTIONS */
+    .sec { padding: 5.5rem 2rem; max-width: 1040px; margin: 0 auto; }
+    .sec-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 0.6rem; }
+    .sec-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 0.75rem; }
+    .sec-sub { color: var(--muted); font-size: 1rem; margin-bottom: 3rem; max-width: 520px; }
+
+    /* FEATURES */
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1px;
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      background: var(--border);
+    }
+    .feat {
+      background: var(--bg2); padding: 2.25rem;
+      transition: background 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .feat::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(0,229,212,0.07), transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .feat:hover { background: rgba(19,42,66,0.95); }
+    .feat:hover::before { opacity: 1; }
+    .feat-ico {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(0,229,212,0.15), rgba(77,159,255,0.1));
+      border: 1px solid rgba(0,229,212,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.25rem;
+      box-shadow: 0 0 20px rgba(0,229,212,0.08);
+    }
+    .feat h3 { font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+    .feat p { font-size: 0.875rem; color: #6b90aa; line-height: 1.65; }
+
+    /* SCENARIO CARDS */
+    .sc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .sc {
+      background: rgba(19,35,56,0.7); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .sc::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .sc:hover { border-color: rgba(0,229,212,0.35); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 30px rgba(0,229,212,0.06); }
+    .sc:hover::after { transform: scaleX(1); }
+    .sc-tag {
+      display: inline-block; font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 0.22rem 0.65rem; border-radius: 6px;
+      background: rgba(0,229,212,0.1); color: var(--teal); border: 1px solid rgba(0,229,212,0.22);
+      margin-bottom: 0.85rem;
+    }
+    .sc h4 { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 0.4rem; }
+    .sc p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* QUOTE */
+    .quote-band {
+      padding: 6rem 2rem; text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(0,229,212,0.04), transparent);
+      position: relative;
+    }
+    .quote-band::before {
+      content: ''; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(0,229,212,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .qmark { font-size: 5rem; line-height: 0.7; color: var(--teal); opacity: 0.4; display: block; margin-bottom: 1rem; }
+    .quote-band blockquote {
+      font-size: clamp(1.2rem, 2.8vw, 1.7rem); font-weight: 600; letter-spacing: -0.02em;
+      line-height: 1.55; max-width: 680px; margin: 0 auto 1.5rem;
+      color: rgba(232,244,255,0.9);
+    }
+    .q-attr { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+
+    /* PRICING */
+    .pricing-wrap { display: flex; justify-content: center; padding: 5rem 2rem; }
+    .p-card {
+      max-width: 500px; width: 100%; border-radius: 28px;
+      padding: 3px;
+      background: linear-gradient(135deg, rgba(0,229,212,0.5), rgba(77,159,255,0.4), rgba(167,139,250,0.4));
+      box-shadow: 0 0 60px rgba(0,229,212,0.15), 0 0 120px rgba(77,159,255,0.08);
+      animation: borderPulse 4s ease-in-out infinite;
+    }
+    @keyframes borderPulse { 0%,100%{box-shadow:0 0 60px rgba(0,229,212,0.15),0 0 120px rgba(77,159,255,0.08)} 50%{box-shadow:0 0 80px rgba(0,229,212,0.25),0 0 160px rgba(77,159,255,0.15)} }
+    .p-inner {
+      background: var(--bg2); border-radius: 26px; padding: 3rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .p-inner::before {
+      content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 400px; height: 280px;
+      background: radial-gradient(ellipse, rgba(0,229,212,0.12), transparent 65%);
+    }
+    .p-badge {
+      display: inline-block;
+      background: rgba(0,229,212,0.1); border: 1px solid rgba(0,229,212,0.3);
+      color: var(--teal); font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 0.35rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .p-name { font-size: 1.2rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
+    .p-price {
+      font-size: 5rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin: 0.75rem 0 0.3rem;
+    }
+    .p-note { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
+    .p-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+    .p-feats { list-style: none; text-align: left; margin-bottom: 2.25rem; }
+    .p-feats li {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.6rem 0; font-size: 0.9rem; color: #8aaccc;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .p-feats li:last-child { border-bottom: none; }
+    .pcheck {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,229,212,0.12); border: 1px solid rgba(0,229,212,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: var(--teal);
+    }
+    .btn-buy {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 1.1rem;
+      background: linear-gradient(135deg, var(--teal), var(--teal2));
+      color: #0e1c2f; border-radius: 14px;
+      font-size: 1.05rem; font-weight: 900; letter-spacing: -0.01em;
+      box-shadow: 0 0 30px rgba(0,229,212,0.35);
+      transition: all 0.25s;
+    }
+    .btn-buy:hover { box-shadow: 0 0 55px rgba(0,229,212,0.55); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 2.5rem 2rem;
+      text-align: center; font-size: 0.8rem; color: var(--muted); line-height: 2;
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+    @media (max-width: 640px) {
+      .float-cards { display: none; }
+      .p-inner { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+  <div class="aurora"></div>
+  <div class="grid-bg"></div>
+
+  <!-- NAV -->
+  <nav class="above">
+    <div class="nav-brand">
+      <div class="nav-logo">PP</div>
+      <span class="nav-name">Pocket Placement</span>
+    </div>
+    <a class="nav-cta" href="https://redalex4.gumroad.com/l/kentms" target="_blank">Get Pro — £7.99</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero above">
+    <div class="hero-eyebrow"><div class="pulse-dot"></div>Built for physio students</div>
+    <h1>Your first placement.<br><span class="grad">Prepared. Confident. Safe.</span></h1>
+    <p class="hero-sub">The only app built specifically for first-year physiotherapy placement students — NHS-aligned scenarios, safety guidance and clinical templates, all offline.</p>
+    <div class="hero-btn-wrap">
+      <a class="btn-hero" href="https://redalex4.gumroad.com/l/kentms" target="_blank">
+        Get Pocket Placement Pro <span class="arr">→</span>
+      </a>
+    </div>
+    <p class="hero-note">£7.99 · One-time payment · No subscription · Works offline</p>
+
+    <div class="float-cards">
+      <div class="float-card"><div class="fc-icon">🚦</div><div><div class="fc-text">15 Scenarios</div><div class="fc-sub">6 specialties covered</div></div></div>
+      <div class="float-card"><div class="fc-icon">📝</div><div><div class="fc-text">10 Templates</div><div class="fc-sub">Ready to copy</div></div></div>
+      <div class="float-card"><div class="fc-icon">🛡️</div><div><div class="fc-text">NHS Aligned</div><div class="fc-sub">NICE guidelines</div></div></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band above reveal">
+    <div class="stat-item"><div class="stat-num">15</div><div class="stat-lbl">Clinical scenarios</div></div>
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-lbl">Templates</div></div>
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-lbl">Checklists</div></div>
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-lbl">Specialties</div></div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust-row above reveal">
+    <div class="tpill"><span class="tpill-check">✓</span> NHS/NICE aligned</div>
+    <div class="tpill"><span class="tpill-check">✓</span> Works fully offline</div>
+    <div class="tpill"><span class="tpill-check">✓</span> No login required</div>
+    <div class="tpill"><span class="tpill-check">✓</span> One-time payment</div>
+    <div class="tpill"><span class="tpill-check">✓</span> Built by a physio student</div>
+    <div class="tpill"><span class="tpill-check">✓</span> Instant access</div>
+  </div>
+
+  <div class="glow-line above"></div>
+
+  <!-- FEATURES -->
+  <div class="sec above reveal">
+    <div class="sec-label">What's inside</div>
+    <h2 class="sec-title">Everything you need<br>on placement</h2>
+    <p class="sec-sub">Pro unlocks the complete toolkit — built around what actually happens on a first placement.</p>
+    <div class="feat-grid">
+      <div class="feat"><div class="feat-ico">🚦</div><h3>15 clinical scenarios</h3><p>Practise real placement situations across MSK, respiratory, neuro, elderly care, community and paediatrics.</p></div>
+      <div class="feat"><div class="feat-ico">📝</div><h3>10 clinical templates</h3><p>Copy-ready prompts for consent, SOAP notes, SBAR, MSK objective, goal-setting and discharge planning.</p></div>
+      <div class="feat"><div class="feat-ico">🏆</div><h3>Achievement badges</h3><p>Earn badges as you prepare — track scenarios tried, checklists completed and daily streaks.</p></div>
+      <div class="feat"><div class="feat-ico">📊</div><h3>Progress export</h3><p>Export a placement-ready preparation summary for your portfolio or educator discussion.</p></div>
+      <div class="feat"><div class="feat-ico">🔍</div><h3>Specialty filter</h3><p>Filter scenarios by specialty to focus on exactly what your upcoming placement involves.</p></div>
+      <div class="feat"><div class="feat-ico">📖</div><h3>Quick reference</h3><p>Vital signs, AVPU, MRC grading, Borg RPE, TUG norms, pain scales and abbreviations — offline.</p></div>
+    </div>
+  </div>
+
+  <div class="glow-line above"></div>
+
+  <!-- SCENARIOS -->
+  <div class="sec above reveal">
+    <div class="sec-label">Scenario examples</div>
+    <h2 class="sec-title">Practise before you're<br>standing in the room</h2>
+    <p class="sec-sub">Each scenario gives you a situation, choices and a clear safe response — so you're never caught off guard.</p>
+    <div class="sc-grid">
+      <div class="sc"><div class="sc-tag">MSK</div><h4>Patient reports sudden severe back pain</h4><p>Learn the red flag signs that require immediate escalation and how to communicate this to your educator.</p></div>
+      <div class="sc"><div class="sc-tag">Respiratory</div><h4>SpO₂ drops during treatment</h4><p>Practise recognising the threshold at which to stop, call for help and what to document.</p></div>
+      <div class="sc"><div class="sc-tag">Neuro</div><h4>Patient becomes confused mid-session</h4><p>Understand AVPU and your safe first action when a patient's consciousness changes.</p></div>
+      <div class="sc"><div class="sc-tag">Elderly care</div><h4>Patient refuses treatment</h4><p>Learn to handle consent, respect autonomy and document clearly without panicking.</p></div>
+      <div class="sc"><div class="sc-tag">Community</div><h4>Home visit — unsafe environment</h4><p>Know when and how to raise a safeguarding concern on community placement.</p></div>
+      <div class="sc"><div class="sc-tag">Paediatric</div><h4>Child becomes distressed during assessment</h4><p>Practise child-appropriate communication and when to pause and involve a parent or guardian.</p></div>
+    </div>
+  </div>
+
+  <div class="glow-line above"></div>
+
+  <!-- QUOTE -->
+  <div class="quote-band above reveal">
+    <span class="qmark">"</span>
+    <blockquote>You are not expected to know everything. You are expected to be safe, honest, respectful, supervised and willing to learn.</blockquote>
+    <div class="q-attr">— Pocket Placement placement reminder</div>
+  </div>
+
+  <div class="glow-line above"></div>
+
+  <!-- PRICING -->
+  <div class="pricing-wrap above reveal">
+    <div class="p-card">
+      <div class="p-inner">
+        <div class="p-badge">One-time purchase</div>
+        <div class="p-name">Pocket Placement Pro</div>
+        <div class="p-price">£7.99</div>
+        <div class="p-note">Instant access · Works offline · All future updates</div>
+        <div class="p-divider"></div>
+        <ul class="p-feats">
+          <li><div class="pcheck">✓</div> 15 placement scenarios across 6 specialties</li>
+          <li><div class="pcheck">✓</div> 10 clinical templates</li>
+          <li><div class="pcheck">✓</div> Achievement badges &amp; streak tracking</li>
+          <li><div class="pcheck">✓</div> Progress export for your portfolio</li>
+          <li><div class="pcheck">✓</div> Specialty filter</li>
+          <li><div class="pcheck">✓</div> Quick reference — vitals, scales, abbreviations</li>
+          <li><div class="pcheck">✓</div> Full offline access</li>
+          <li><div class="pcheck">✓</div> All future updates included</li>
+        </ul>
+        <a class="btn-buy" href="https://redalex4.gumroad.com/l/kentms" target="_blank">Get Pro now — £7.99 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="above">
+    <p>Pocket Placement is a learning tool only. Always follow your university, placement provider and educator instructions.</p>
+    <p>Not a substitute for clinical supervision. Content reviewed June 2025.</p>
+    <p style="margin-top:0.75rem; color:#2a4a5a;">© 2025 Pocket Placement Pro</p>
+  </footer>
+
+  <script>
+    /* PARTICLES */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, dots = [];
+    function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    for (let i = 0; i < 80; i++) {
+      dots.push({
+        x: Math.random() * 2000, y: Math.random() * 2000,
+        r: Math.random() * 1.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        a: Math.random() * 0.5 + 0.1
+      });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      dots.forEach(d => {
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
+        if (d.y < 0) d.y = H; if (d.y > H) d.y = 0;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,229,212,${d.a})`;
+        ctx.fill();
+      });
+      /* draw connections */
+      for (let i = 0; i < dots.length; i++) {
+        for (let j = i + 1; j < dots.length; j++) {
+          const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 140) {
+            ctx.beginPath();
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.strokeStyle = `rgba(0,229,212,${0.06 * (1 - dist/140)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    /* SCROLL REVEAL */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
