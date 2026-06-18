@@ -3,7 +3,7 @@
 // Bump CACHE_NAME whenever you change index.html, styles.css or app.js.
 // ============================================================
 
-const CACHE_NAME = 'pocket-placement-pro-v3';
+const CACHE_NAME = 'pocket-placement-pro-v4';
 
 const FILES = [
   './',

@@ -734,3 +734,9 @@ main { padding: 14px 14px 64px; }
 .quiz-score-msg { color: var(--muted); margin: 16px 0 20px; }
 .quiz-result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .quiz-result-actions button { flex: 1; min-width: 150px; }
+
+/* ── UNFINISHED CHECKLIST NUDGE ──────────────────────────────── */
+.nudge-prompt { border-left-color: var(--amber); }
+.nudge-prompt .tip-label { color: var(--amber); }
+.nudge-prompt p { margin: 0 0 12px; font-style: normal; }
+.nudge-prompt .primary { background: var(--amber); }

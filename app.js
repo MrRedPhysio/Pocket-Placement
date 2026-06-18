@@ -589,6 +589,7 @@ function renderHome() {
   document.getElementById('dailyTip').textContent = getDailyTip();
   renderPlacementBanner();
   renderReviewPrompt();
+  renderUnfinishedNudge();
 }
 
 function renderPlacementBanner() {
@@ -642,6 +643,33 @@ function renderReviewPrompt() {
     state.reviewMode = true;
     setView('scenarios');
   });
+}
+
+// Nudge for checklists started but not finished — catches students when they return.
+function renderUnfinishedNudge() {
+  const host = document.getElementById('unfinishedNudge');
+  if (!host) return;
+
+  // Find checklists with at least one ticked item but not all ticked.
+  const inProgress = checklists.map(list => {
+    const done = list.steps.filter((_, i) => state.checked[`${list.id}-${i}`]).length;
+    return { list, done, total: list.steps.length };
+  }).filter(c => c.done > 0 && c.done < c.total);
+
+  if (!inProgress.length) { host.hidden = true; host.innerHTML = ''; return; }
+
+  // Show the one they're furthest into (most done), so it feels closest to finishing.
+  inProgress.sort((a, b) => (b.done / b.total) - (a.done / a.total));
+  const top = inProgress[0];
+  const remaining = top.total - top.done;
+  const others = inProgress.length - 1;
+
+  host.hidden = false;
+  host.innerHTML = `
+    <span class="tip-label">📌 Pick up where you left off</span>
+    <p>You started <strong>${top.list.title}</strong> but haven't finished — <strong>${remaining} item${remaining !== 1 ? 's' : ''}</strong> left${others > 0 ? `, plus ${others} other checklist${others !== 1 ? 's' : ''} in progress` : ''}.</p>
+    <button class="primary" id="resumeChecklistBtn">Finish it now</button>`;
+  document.getElementById('resumeChecklistBtn').addEventListener('click', () => setView('checklists'));
 }
 
 // ── PLACEMENT DIALOG ──────────────────────────────────────────
