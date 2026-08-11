@@ -143,6 +143,8 @@ const references = [
   { text:'NICE — Falls in older people: assessment and prevention (NG249)', url:'https://www.nice.org.uk/guidance/ng249' },
   { text:'NICE — Low back pain and sciatica (NG59)', url:'https://www.nice.org.uk/guidance/ng59' },
   { text:'CSP — Consent guidance for physiotherapists', url:'https://www.csp.org.uk/professional-clinical/professional-guidance/consent' },
+  { text:'Physiopedia — free evidence-based physiotherapy knowledge', url:'https://www.physio-pedia.com/home/' },
+  { text:'HCPC — standards of proficiency and conduct', url:'https://www.hcpc-uk.org/' },
   { text:'Your university handbook and local placement provider policies', url:null }
 ];
 
@@ -529,6 +531,8 @@ function setView(id) {
   if (id === 'home')     renderHome();
   if (id === 'scenarios') renderScenarios();
   if (id === 'quiz')     renderQuizHome();
+  if (id === 'anatomy')  renderAnatomy();
+  if (id === 'resources') renderResources();
 }
 
 document.querySelectorAll('.tab').forEach(btn =>
@@ -549,6 +553,8 @@ function rerenderCurrent() {
   else if (currentView === 'templates') renderTemplates();
   else if (currentView === 'safety')    renderSafety();
   else if (currentView === 'reference') renderReference();
+  else if (currentView === 'anatomy') renderAnatomy();
+  else if (currentView === 'resources') renderResources();
 }
 
 document.getElementById('searchInput').addEventListener('input', e => {
@@ -1184,7 +1190,12 @@ const quizBank = {
       { q: 'DOMS (delayed onset muscle soreness) typically peaks 24–72 hours after unaccustomed exercise.', answer: true, explain: 'Correct. DOMS usually peaks around 24–72 hours and is linked to eccentric/unaccustomed loading.' },
       { q: 'The carpal tunnel transmits the ulnar nerve.', answer: false, explain: 'False. The carpal tunnel transmits the MEDIAN nerve. Carpal tunnel syndrome is median nerve compression.' },
       { q: 'Eccentric loading programmes are commonly used in the management of Achilles tendinopathy.', answer: true, explain: 'Correct. Eccentric (and heavy slow resistance) loading is well-supported for mid-portion Achilles tendinopathy.' },
-      { q: 'A Colles fracture is a fracture of the distal radius with dorsal displacement.', answer: true, explain: 'Correct. Classic "dinner fork" deformity, often from a fall onto an outstretched hand.' }
+      { q: 'A Colles fracture is a fracture of the distal radius with dorsal displacement.', answer: true, explain: 'Correct. Classic "dinner fork" deformity, often from a fall onto an outstretched hand.' },
+      { q: 'The tibialis anterior is the main dorsiflexor of the ankle and its weakness causes foot drop.', answer: true, explain: 'Correct. Tibialis anterior (deep fibular nerve, L4–L5) is the principal dorsiflexor — weakness gives the classic foot drop and high-stepping gait.' },
+      { q: 'The gluteus medius is primarily a hip extensor.', answer: false, explain: 'False. Gluteus medius is a hip ABDUCTOR and key pelvic stabiliser in single-leg stance. Gluteus maximus is the main extensor.' },
+      { q: 'A positive Trendelenburg sign suggests weakness of the hip abductors on the stance (supporting) side.', answer: true, explain: 'Correct. The pelvis drops on the swing side because the stance-side abductors (mainly gluteus medius) cannot hold it level.' },
+      { q: 'The rectus femoris crosses both the hip and the knee.', answer: true, explain: 'Correct. It is the only quadriceps muscle crossing two joints — it flexes the hip and extends the knee.' },
+      { q: 'The supraspinatus initiates shoulder abduction.', answer: true, explain: 'Correct. Supraspinatus initiates roughly the first 15° of abduction before deltoid takes over.' }
     ]
   },
   Neuro: {
@@ -1204,7 +1215,12 @@ const quizBank = {
       { q: 'The Glasgow Coma Scale assesses eye, verbal and motor responses.', answer: true, explain: 'Correct. GCS scores eye opening, verbal response and motor response (range 3–15).' },
       { q: 'Patients with hemispatial neglect after stroke are simply choosing to ignore one side and can easily attend to it if reminded.', answer: false, explain: 'False. Neglect is a genuine perceptual/attentional deficit, not a choice. It needs specific rehabilitation strategies.' },
       { q: 'Guillain-Barré syndrome typically presents with an ascending, symmetrical weakness.', answer: true, explain: 'Correct. Classically an ascending, relatively symmetrical weakness; it can affect respiratory muscles, so monitoring is important.' },
-      { q: 'Spasticity is best described as a velocity-dependent increase in muscle tone.', answer: true, explain: 'Correct. Spasticity increases with faster passive movement — a velocity-dependent resistance.' }
+      { q: 'Spasticity is best described as a velocity-dependent increase in muscle tone.', answer: true, explain: 'Correct. Spasticity increases with faster passive movement — a velocity-dependent resistance.' },
+      { q: 'The phrenic nerve arises from spinal levels C3 to C5.', answer: true, explain: 'Correct — the classic reminder is "C3, 4, 5 keep the diaphragm alive." A high cervical injury can therefore threaten breathing.' },
+      { q: 'The common fibular (peroneal) nerve is commonly injured at the neck of the fibula.', answer: true, explain: 'Correct. Its superficial course at the fibular neck makes it vulnerable — a frequent cause of foot drop.' },
+      { q: 'A C6 nerve root lesion would typically affect the biceps reflex.', answer: true, explain: 'Correct. The biceps reflex is mainly C5–C6; triceps is C7. Useful for localising a root level.' },
+      { q: 'Cauda equina syndrome is an upper motor neurone lesion.', answer: false, explain: 'False. The cauda equina is made of lumbosacral nerve ROOTS, so it produces a lower motor neurone picture — and it is a surgical emergency.' },
+      { q: 'The sciatic nerve divides into the tibial and common fibular nerves.', answer: true, explain: 'Correct. It usually divides in the distal posterior thigh into the tibial and common fibular (peroneal) branches.' }
     ]
   },
   Cardioresp: {
@@ -1224,7 +1240,12 @@ const quizBank = {
       { q: 'Orthopnoea means breathlessness that worsens when lying flat.', answer: true, explain: 'Correct. Orthopnoea is breathlessness on lying flat, often relieved by sitting up — common in heart failure.' },
       { q: 'Capillary refill time of under 2 seconds is generally considered normal.', answer: true, explain: 'Correct. A CRT under ~2 seconds is typically normal; prolonged CRT may indicate poor perfusion.' },
       { q: 'Early mobilisation of appropriate post-operative patients has no role in preventing respiratory complications.', answer: false, explain: 'False. Early, appropriate mobilisation helps reduce post-operative respiratory complications and deconditioning.' },
-      { q: 'Cyanosis (a bluish tinge to lips or extremities) can indicate inadequate oxygenation.', answer: true, explain: 'Correct. Central cyanosis in particular suggests significant hypoxaemia and warrants prompt assessment.' }
+      { q: 'Cyanosis (a bluish tinge to lips or extremities) can indicate inadequate oxygenation.', answer: true, explain: 'Correct. Central cyanosis in particular suggests significant hypoxaemia and warrants prompt assessment.' },
+      { q: 'The diaphragm is innervated by the phrenic nerve.', answer: true, explain: 'Correct — phrenic nerve, C3–C5. This is why high cervical injuries compromise breathing.' },
+      { q: 'Accessory muscles of respiration include sternocleidomastoid and scalenes.', answer: true, explain: 'Correct. Visible accessory muscle use is an important clinical sign of increased work of breathing.' },
+      { q: 'A NEWS2 score is calculated from a single observation such as oxygen saturation alone.', answer: false, explain: 'False. NEWS2 aggregates several parameters — respiratory rate, SpO2, oxygen use, blood pressure, pulse, consciousness and temperature.' },
+      { q: 'Huffing (forced expiration technique) is generally less tiring and less likely to cause airway collapse than repeated coughing.', answer: true, explain: 'Correct. A huff moves secretions with an open glottis, so it is usually more efficient and better tolerated than repeated coughing.' },
+      { q: 'In a patient at risk of hypercapnic respiratory failure, the target oxygen saturation range may be lower than for most patients.', answer: true, explain: 'Correct. Some patients (e.g. certain COPD patients) have a lower target range. Always check the prescribed target on the chart and follow local policy.' }
     ]
   }
 };
@@ -1377,6 +1398,198 @@ function finishQuiz() {
   result.querySelector('#quizBack').addEventListener('click', renderQuizHome);
 }
 
+// ── ANATOMY REFERENCE ─────────────────────────────────────────
+// Origin / insertion / action / nerve for muscles commonly examined
+// in UK physiotherapy programmes. REVIEW against your own anatomy text.
+
+const anatomyRegions = [
+  {
+    id: 'shoulder', label: 'Shoulder & scapula', icon: '💪',
+    muscles: [
+      { name:'Supraspinatus', origin:'Supraspinous fossa of scapula', insertion:'Greater tubercle of humerus (superior facet)', action:'Initiates shoulder abduction (first ~15°); stabilises humeral head', nerve:'Suprascapular (C5–C6)' },
+      { name:'Infraspinatus', origin:'Infraspinous fossa of scapula', insertion:'Greater tubercle of humerus (middle facet)', action:'Lateral (external) rotation of shoulder', nerve:'Suprascapular (C5–C6)' },
+      { name:'Teres minor', origin:'Lateral border of scapula', insertion:'Greater tubercle of humerus (inferior facet)', action:'Lateral rotation and adduction of shoulder', nerve:'Axillary (C5–C6)' },
+      { name:'Subscapularis', origin:'Subscapular fossa', insertion:'Lesser tubercle of humerus', action:'Medial (internal) rotation of shoulder', nerve:'Upper & lower subscapular (C5–C6)' },
+      { name:'Deltoid', origin:'Lateral clavicle, acromion, spine of scapula', insertion:'Deltoid tuberosity of humerus', action:'Anterior: flexion/medial rotation. Middle: abduction. Posterior: extension/lateral rotation', nerve:'Axillary (C5–C6)' },
+      { name:'Trapezius', origin:'Occipital bone, nuchal ligament, spinous processes C7–T12', insertion:'Lateral clavicle, acromion, spine of scapula', action:'Upper: scapular elevation. Middle: retraction. Lower: depression', nerve:'Accessory nerve (CN XI)' },
+      { name:'Serratus anterior', origin:'Ribs 1–8/9 (lateral surface)', insertion:'Medial border of scapula (costal surface)', action:'Scapular protraction and upward rotation; holds scapula to thorax', nerve:'Long thoracic (C5–C7)' },
+      { name:'Rhomboid major & minor', origin:'Spinous processes C7–T5', insertion:'Medial border of scapula', action:'Scapular retraction and downward rotation', nerve:'Dorsal scapular (C4–C5)' },
+      { name:'Latissimus dorsi', origin:'Spinous processes T7–L5, thoracolumbar fascia, iliac crest', insertion:'Intertubercular groove of humerus', action:'Shoulder extension, adduction, medial rotation', nerve:'Thoracodorsal (C6–C8)' },
+      { name:'Pectoralis major', origin:'Clavicle, sternum, upper costal cartilages', insertion:'Lateral lip of intertubercular groove', action:'Shoulder adduction, medial rotation, flexion (clavicular head)', nerve:'Medial & lateral pectoral (C5–T1)' }
+    ]
+  },
+  {
+    id: 'elbow', label: 'Elbow, forearm & wrist', icon: '🦾',
+    muscles: [
+      { name:'Biceps brachii', origin:'Long head: supraglenoid tubercle. Short head: coracoid process', insertion:'Radial tuberosity; bicipital aponeurosis', action:'Elbow flexion; forearm supination; weak shoulder flexion', nerve:'Musculocutaneous (C5–C6)' },
+      { name:'Brachialis', origin:'Distal anterior humerus', insertion:'Ulnar tuberosity and coronoid process', action:'Primary elbow flexor (any forearm position)', nerve:'Musculocutaneous (C5–C6)' },
+      { name:'Brachioradialis', origin:'Lateral supracondylar ridge of humerus', insertion:'Distal radius (styloid process)', action:'Elbow flexion, strongest in mid-pronation', nerve:'Radial (C5–C6)' },
+      { name:'Triceps brachii', origin:'Long head: infraglenoid tubercle. Lateral/medial heads: posterior humerus', insertion:'Olecranon of ulna', action:'Elbow extension; long head assists shoulder extension', nerve:'Radial (C6–C8)' },
+      { name:'Pronator teres', origin:'Medial epicondyle of humerus; coronoid process', insertion:'Lateral radius (mid-shaft)', action:'Forearm pronation; assists elbow flexion', nerve:'Median (C6–C7)' },
+      { name:'Supinator', origin:'Lateral epicondyle, supinator crest of ulna', insertion:'Proximal radius', action:'Forearm supination', nerve:'Posterior interosseous (radial, C5–C6)' },
+      { name:'Flexor carpi radialis', origin:'Medial epicondyle (common flexor origin)', insertion:'Base of 2nd/3rd metacarpal', action:'Wrist flexion and radial deviation', nerve:'Median (C6–C7)' },
+      { name:'Flexor carpi ulnaris', origin:'Medial epicondyle; olecranon', insertion:'Pisiform, hamate, 5th metacarpal', action:'Wrist flexion and ulnar deviation', nerve:'Ulnar (C7–C8)' },
+      { name:'Extensor carpi radialis longus/brevis', origin:'Lateral supracondylar ridge / lateral epicondyle', insertion:'Base of 2nd / 3rd metacarpal', action:'Wrist extension and radial deviation', nerve:'Radial (C6–C7)' },
+      { name:'Extensor carpi ulnaris', origin:'Lateral epicondyle; posterior ulna', insertion:'Base of 5th metacarpal', action:'Wrist extension and ulnar deviation', nerve:'Posterior interosseous (C7–C8)' }
+    ]
+  },
+  {
+    id: 'hip', label: 'Hip & pelvis', icon: '🦿',
+    muscles: [
+      { name:'Gluteus maximus', origin:'Posterior ilium, sacrum, coccyx, sacrotuberous ligament', insertion:'Iliotibial tract; gluteal tuberosity of femur', action:'Hip extension and lateral rotation; assists in rising from sitting', nerve:'Inferior gluteal (L5–S2)' },
+      { name:'Gluteus medius', origin:'External ilium (between anterior and posterior gluteal lines)', insertion:'Greater trochanter (lateral surface)', action:'Hip abduction; stabilises pelvis in single-leg stance', nerve:'Superior gluteal (L4–S1)' },
+      { name:'Gluteus minimus', origin:'External ilium (between anterior and inferior gluteal lines)', insertion:'Greater trochanter (anterior surface)', action:'Hip abduction and medial rotation; pelvic stability', nerve:'Superior gluteal (L4–S1)' },
+      { name:'Iliopsoas (iliacus + psoas major)', origin:'Iliac fossa / T12–L5 vertebral bodies and transverse processes', insertion:'Lesser trochanter of femur', action:'Primary hip flexor; assists lumbar flexion', nerve:'Femoral (L2–L3) / anterior rami L1–L3' },
+      { name:'Tensor fasciae latae', origin:'Anterior iliac crest, ASIS', insertion:'Iliotibial tract', action:'Hip flexion, abduction, medial rotation; tensions ITB', nerve:'Superior gluteal (L4–S1)' },
+      { name:'Piriformis', origin:'Anterior sacrum', insertion:'Greater trochanter (superior border)', action:'Hip lateral rotation; abduction when hip flexed', nerve:'Nerve to piriformis (S1–S2)' },
+      { name:'Adductor longus / magnus / brevis', origin:'Pubis (body, inferior ramus); magnus also ischial tuberosity', insertion:'Linea aspera of femur; magnus also adductor tubercle', action:'Hip adduction; magnus posterior fibres assist extension', nerve:'Obturator (L2–L4); magnus also sciatic (tibial) L4' }
+    ]
+  },
+  {
+    id: 'knee', label: 'Knee & thigh', icon: '🦵',
+    muscles: [
+      { name:'Rectus femoris', origin:'AIIS and superior acetabular rim', insertion:'Patella → tibial tuberosity via patellar ligament', action:'Knee extension and hip flexion (two-joint muscle)', nerve:'Femoral (L2–L4)' },
+      { name:'Vastus lateralis', origin:'Greater trochanter, lateral linea aspera', insertion:'Patella → tibial tuberosity', action:'Knee extension', nerve:'Femoral (L2–L4)' },
+      { name:'Vastus medialis', origin:'Intertrochanteric line, medial linea aspera', insertion:'Patella → tibial tuberosity', action:'Knee extension; VMO assists patellar tracking', nerve:'Femoral (L2–L4)' },
+      { name:'Vastus intermedius', origin:'Anterior/lateral femoral shaft', insertion:'Patella → tibial tuberosity', action:'Knee extension', nerve:'Femoral (L2–L4)' },
+      { name:'Biceps femoris', origin:'Long head: ischial tuberosity. Short head: linea aspera', insertion:'Head of fibula', action:'Knee flexion and lateral rotation; long head extends hip', nerve:'Sciatic — tibial (long head), common fibular (short head)' },
+      { name:'Semitendinosus', origin:'Ischial tuberosity', insertion:'Pes anserinus (medial tibia)', action:'Knee flexion and medial rotation; hip extension', nerve:'Sciatic (tibial division, L5–S2)' },
+      { name:'Semimembranosus', origin:'Ischial tuberosity', insertion:'Medial tibial condyle (posterior)', action:'Knee flexion and medial rotation; hip extension', nerve:'Sciatic (tibial division, L5–S2)' },
+      { name:'Popliteus', origin:'Lateral femoral condyle', insertion:'Posterior proximal tibia', action:'"Unlocks" the extended knee by lateral femoral rotation', nerve:'Tibial (L4–S1)' },
+      { name:'Sartorius', origin:'ASIS', insertion:'Pes anserinus (medial tibia)', action:'Hip flexion, abduction, lateral rotation; knee flexion', nerve:'Femoral (L2–L3)' }
+    ]
+  },
+  {
+    id: 'ankle', label: 'Ankle & foot', icon: '🦶',
+    muscles: [
+      { name:'Gastrocnemius', origin:'Medial and lateral femoral condyles', insertion:'Calcaneus via Achilles tendon', action:'Ankle plantarflexion; assists knee flexion', nerve:'Tibial (S1–S2)' },
+      { name:'Soleus', origin:'Posterior fibula and soleal line of tibia', insertion:'Calcaneus via Achilles tendon', action:'Ankle plantarflexion (dominant with knee flexed); postural stability', nerve:'Tibial (S1–S2)' },
+      { name:'Tibialis anterior', origin:'Lateral tibial condyle, proximal lateral tibia', insertion:'Medial cuneiform, base of 1st metatarsal', action:'Ankle dorsiflexion and inversion — key in foot drop', nerve:'Deep fibular (L4–L5)' },
+      { name:'Tibialis posterior', origin:'Posterior tibia, fibula, interosseous membrane', insertion:'Navicular, cuneiforms, metatarsals 2–4', action:'Plantarflexion and inversion; supports medial arch', nerve:'Tibial (L4–L5)' },
+      { name:'Fibularis (peroneus) longus & brevis', origin:'Lateral fibula', insertion:'Longus: medial cuneiform/1st MT. Brevis: base of 5th MT', action:'Eversion and assists plantarflexion; supports lateral arch', nerve:'Superficial fibular (L5–S1)' },
+      { name:'Extensor digitorum longus', origin:'Lateral tibial condyle, anterior fibula', insertion:'Middle/distal phalanges of toes 2–5', action:'Toe extension; assists dorsiflexion', nerve:'Deep fibular (L5–S1)' },
+      { name:'Flexor digitorum longus', origin:'Posterior tibia', insertion:'Distal phalanges of toes 2–5', action:'Toe flexion; assists plantarflexion and inversion', nerve:'Tibial (S2–S3)' }
+    ]
+  },
+  {
+    id: 'trunk', label: 'Trunk & spine', icon: '🧍',
+    muscles: [
+      { name:'Rectus abdominis', origin:'Pubic crest and symphysis', insertion:'Xiphoid process, costal cartilages 5–7', action:'Trunk flexion; increases intra-abdominal pressure', nerve:'Intercostal nerves T7–T12' },
+      { name:'External oblique', origin:'Ribs 5–12 (external surfaces)', insertion:'Iliac crest, linea alba', action:'Trunk flexion, contralateral rotation, lateral flexion', nerve:'Intercostal T7–T12, subcostal' },
+      { name:'Internal oblique', origin:'Thoracolumbar fascia, iliac crest, inguinal ligament', insertion:'Ribs 10–12, linea alba', action:'Trunk flexion, ipsilateral rotation, lateral flexion', nerve:'Intercostal T7–T12, L1' },
+      { name:'Transversus abdominis', origin:'Thoracolumbar fascia, iliac crest, costal cartilages 7–12', insertion:'Linea alba, pubic crest', action:'Compresses abdomen; key deep local stabiliser of the lumbar spine', nerve:'Intercostal T7–T12, L1' },
+      { name:'Erector spinae (iliocostalis, longissimus, spinalis)', origin:'Sacrum, iliac crest, spinous/transverse processes', insertion:'Ribs, transverse processes, spinous processes above', action:'Spinal extension, lateral flexion; postural control', nerve:'Posterior rami of spinal nerves' },
+      { name:'Multifidus', origin:'Sacrum, transverse processes', insertion:'Spinous processes 2–4 segments above', action:'Segmental spinal stabilisation and extension', nerve:'Posterior rami of spinal nerves' },
+      { name:'Quadratus lumborum', origin:'Iliac crest, iliolumbar ligament', insertion:'12th rib, transverse processes L1–L4', action:'Lateral trunk flexion; stabilises 12th rib in respiration', nerve:'Subcostal, L1–L4' },
+      { name:'Diaphragm', origin:'Xiphoid, costal margin (ribs 7–12), lumbar vertebrae via crura', insertion:'Central tendon', action:'Primary muscle of inspiration', nerve:'Phrenic (C3–C5)' }
+    ]
+  }
+];
+
+// ── FREE UK RESOURCE HUB ──────────────────────────────────────
+const resourceHub = [
+  {
+    group: 'Core free knowledge',
+    items: [
+      { name:'Physiopedia', note:'Free, evidence-based physiotherapy knowledge base — a UK-registered charity with thousands of peer-reviewed pages.', url:'https://www.physio-pedia.com/home/' },
+      { name:'Physiopedia — Students Guide', note:'Guidance written specifically for physiotherapy students getting started.', url:'https://www.physio-pedia.com/Students_Guide' }
+    ]
+  },
+  {
+    group: 'Professional standards (UK)',
+    items: [
+      { name:'CSP — Chartered Society of Physiotherapy', note:'Your professional body. Student resources, guidance and career support.', url:'https://www.csp.org.uk/' },
+      { name:'CSP — Consent guidance', note:'Profession-specific guidance on gaining and recording valid consent.', url:'https://www.csp.org.uk/professional-clinical/professional-guidance/consent' },
+      { name:'HCPC — Health and Care Professions Council', note:'The regulator. Standards of proficiency and conduct you will be held to.', url:'https://www.hcpc-uk.org/' }
+    ]
+  },
+  {
+    group: 'Clinical guidelines',
+    items: [
+      { name:'NICE — Low back pain and sciatica (NG59)', note:'Assessment and management of low back pain and sciatica in over 16s.', url:'https://www.nice.org.uk/guidance/ng59' },
+      { name:'NICE — Falls in older people (NG249)', note:'Assessment and prevention of falls in older people.', url:'https://www.nice.org.uk/guidance/ng249' },
+      { name:'NICE — Shared decision-making (NG197)', note:'How to make decisions together with the people you treat.', url:'https://www.nice.org.uk/guidance/ng197' },
+      { name:'NICE — all guidance', note:'Search the full library of NICE clinical guidelines.', url:'https://www.nice.org.uk/guidance' },
+      { name:'NHS England — Shared decision-making', note:'Practical NHS resources on involving patients in their care.', url:'https://www.england.nhs.uk/shared-decision-making/' }
+    ]
+  }
+];
+
+// ── RENDER: ANATOMY ───────────────────────────────────────────
+state.anatomyRegion ||= 'shoulder';
+
+function renderAnatomy() {
+  const root = document.getElementById('anatomyList');
+  if (!root) return;
+
+  const tabs = anatomyRegions.map(r =>
+    `<button class="anat-chip ${state.anatomyRegion === r.id ? 'active' : ''}" data-region="${r.id}">${r.icon} ${r.label}</button>`
+  ).join('');
+
+  let region = anatomyRegions.find(r => r.id === state.anatomyRegion) || anatomyRegions[0];
+  let muscles = region.muscles;
+
+  // Search spans ALL regions so students can find a muscle without knowing its region.
+  let searchingAll = false;
+  if (searchQuery) {
+    const hits = [];
+    anatomyRegions.forEach(r => r.muscles.forEach(m => {
+      if (matches(m.name) || matches(m.action) || matches(m.nerve) || matches(m.origin) || matches(m.insertion)) {
+        hits.push({ ...m, _region: r.label });
+      }
+    }));
+    muscles = hits; searchingAll = true;
+  }
+
+  if (!muscles.length) {
+    root.innerHTML = `<div class="anat-chips">${tabs}</div><p class="empty-state">No muscles match your search.</p>`;
+  } else {
+    root.innerHTML = `
+      <div class="anat-chips">${tabs}</div>
+      ${searchingAll ? `<p class="anat-search-note">${muscles.length} match${muscles.length !== 1 ? 'es' : ''} across all regions</p>` : ''}
+      <div class="stack">
+        ${muscles.map(m => `
+          <article class="card anat-card">
+            <h3>${m.name}</h3>
+            ${m._region ? `<span class="badge">${m._region}</span>` : ''}
+            <dl class="anat-dl">
+              <dt>Origin</dt><dd>${m.origin}</dd>
+              <dt>Insertion</dt><dd>${m.insertion}</dd>
+              <dt>Action</dt><dd>${m.action}</dd>
+              <dt>Nerve</dt><dd>${m.nerve}</dd>
+            </dl>
+          </article>`).join('')}
+      </div>`;
+  }
+
+  root.querySelectorAll('.anat-chip').forEach(btn =>
+    btn.addEventListener('click', () => {
+      state.anatomyRegion = btn.dataset.region;
+      persist();
+      renderAnatomy();
+    })
+  );
+}
+
+// ── RENDER: RESOURCE HUB ──────────────────────────────────────
+function renderResources() {
+  const root = document.getElementById('resourceList');
+  if (!root) return;
+  root.innerHTML = resourceHub.map(g => {
+    const items = g.items.filter(i => matches(i.name) || matches(i.note));
+    if (!items.length) return '';
+    return `<article class="card">
+      <h3>${g.group}</h3>
+      <ul class="res-list">
+        ${items.map(i => `<li>
+          <a href="${i.url}" target="_blank" rel="noopener noreferrer">${i.name} ↗</a>
+          <p>${i.note}</p>
+        </li>`).join('')}
+      </ul>
+    </article>`;
+  }).join('') || '<p class="empty-state">No resources match your search.</p>';
+}
+
 // ── INIT ──────────────────────────────────────────────────────
 
 if ('serviceWorker' in navigator) {
@@ -1392,6 +1605,8 @@ renderTemplates();
 renderSafety();
 renderReference();
 renderQuizHome();
+renderAnatomy();
+renderResources();
 updateProgress();
 checkAchievements();
 renderProgress();
